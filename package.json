@@ -1,0 +1,27 @@
+{
+  "name": "task_manager",
+  "version": "1.0.0",
+  "description": "The project that was created to automize your tasks-list",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript",
+    "js"
+  ],
+  "author": "Skorinov Vladislav skorinov41@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.2",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.10",
+    "sqlite": "^4.0.7",
+    "uuid": "^7.0.3"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.3"
+  }
+}

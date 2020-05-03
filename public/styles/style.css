@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500,700&display=swap');
+
+body{
+    background-color: #EFEEEE;
+    color: #303030;
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1{
+    padding: 0;
+    margin: 2vh;
+    font-size: 5vh; 
+}
+
+.task{
+    font-size: 1.85vh;
+}
+
+.item{
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    list-style: none;
+    width: 90vw;
+    margin: 1.5vh 0;
+    padding: 0.5vh 2vh;
+    border-radius: 2vh;
+    box-shadow: -6px -6px 26px 0 rgba(255, 255, 255, 0.83), 6px 6px 16px 0 rgba(217, 210, 200, 0.51);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+
+.buttons{
+    height: 5.5vh;
+    display: flex;
+    align-items: center;
+}
+
+.hidden{
+    display: none;
+}
+
+.create{
+    height: 5.5vh;
+    margin: 1.5vh 0;
+}
+
+button{
+    background-color: #EFEEEE;
+    height: 100%;
+    width: 5.5vh;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1vh;
+    box-shadow: -0.18vh -0.18vh 0.46vh rgba(255, 255, 255, 0.83) inset, 0.18vh 0.18vh 0.74vh rgba(217, 210, 200, 0.51) inset;
+    transition: 200ms;
+}
+button img{
+    height: 80%;
+    width: 80%;
+}
+button:focus{
+    outline: none;
+}
+
+input{
+    height: 5.5vh;
+    border-radius: 1vh;
+    background-color: #EFEEEE;
+    width: 92%;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    font-size: 1.85vh;
+    color: #9d9d9d;
+    font-weight: 500;
+    margin-block-start: 0.277em;
+    margin-block-end: 0.277em;
+    box-sizing: border-box;
+    padding: 0 4vh;
+    box-shadow: -0.18vh -0.18vh 0.46vh rgba(255, 255, 255, 0.83) inset, 0.18vh 0.18vh 0.74vh rgba(217, 210, 200, 0.51) inset;
+}
+
+input:focus{
+    outline: none;
+}
+
+.buttons button:nth-child(1){
+    margin-right: 1.5vh;
+}
+
+@media screen and (max-width: 1000px){
+    .item{
+        width: 80vw;
+    }
+
+    input{
+        padding: 0 4vw;
+    }
+}

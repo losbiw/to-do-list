@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks</title>
+    <link rel="stylesheet" href="/public/styles/style.css" type="text/css">
+</head>
+<body>
+    <h1>Today tasks</h1>
+    <div class="item hidden">
+        <p class="task">New Task</p>
+        <input type="text" class="input hidden">
+        <div class="buttons">
+            <button class="edit"><img src="/public/icons/edit.svg"></button>
+            <button class="delete"><img src="/public/icons/delete.svg"></button>
+        </div>
+    </div>
+    <% for(let task of tasks){ %>
+        <div class="item">
+            <p class="task"><%= task%></p>
+            <input type="text" class="input hidden">
+            <div class="buttons">
+                <button class="edit"><img src="/public/icons/edit.svg"></button>
+                <button class="delete"><img src="/public/icons/delete.svg"></button>
+            </div>
+        </div>
+    <% } %>
+
+    <button class="create"><img src="/public/icons/create.svg"></button>
+    <script src="/public/js/newScript.js"></script>
+</body>
+</html>
