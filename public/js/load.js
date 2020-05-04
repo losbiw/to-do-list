@@ -1,4 +1,4 @@
-/*let id = localStorage.getItem('id');
+let id = localStorage.getItem('id');
 if(id == null){
     (async()=>{
         const response = await fetch('./generateId');
@@ -20,5 +20,4 @@ if(id == null){
     document.open()
     document.write(result);
     document.close();
-})();*/
-localStorage.removeItem('id');
+})();
