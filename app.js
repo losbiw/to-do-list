@@ -18,8 +18,8 @@ app.get('/', (req, res)=>{
 
 app.post('/', async (req ,res)=>{
     const id = req.body.id;
-    const currentUser = await User.find({"_id": id});
-    res.render('index', {tasks: currentUser[0].tasks});
+    const currentUser = await User.findById(id);
+    res.render('index', {tasks: currentUser.tasks});
 });
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
