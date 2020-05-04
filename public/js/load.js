@@ -1,13 +1,21 @@
-/*let id = localStorage.getItem('id');
+let id = localStorage.getItem('id');
 if(id == null){
     (async()=>{
-        const response = await fetch('./generateId');
-        id = await response.json();
-        localStorage.setItem('id', id);
+        await createUser();
+        await getUser();
     })();
 }
+else{
+    getUser();
+}
 
-(async()=>{
+async function createUser(){
+    const response = await fetch('./generateId');
+    id = await response.json();
+    localStorage.setItem('id', id);
+}
+
+async function getUser(){
     const response = await fetch('./', {
         headers: {
             'Content-Type': 'application/json'
@@ -20,5 +28,4 @@ if(id == null){
     document.open()
     document.write(result);
     document.close();
-})();*/
-localStorage.removeItem('id');
+}
