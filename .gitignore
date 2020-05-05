@@ -1,2 +1,5 @@
+# Envirovment variables
 .env
-node_moldules
+
+# Dependency directory
+node_modules/
