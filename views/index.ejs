@@ -14,6 +14,8 @@
         <div class="buttons">
             <button class="edit"><img src="/public/icons/edit.svg"></button>
             <button class="delete"><img src="/public/icons/delete.svg"></button>
+            <button class="up"><img src="/public/icons/uparrow.svg"></button>
+            <button class="down"><img src="/public/icons/downarrow.svg"></button>
         </div>
     </div>
     <% for(let task of tasks){ %>
@@ -23,11 +25,13 @@
             <div class="buttons">
                 <button class="edit"><img src="/public/icons/edit.svg"></button>
                 <button class="delete"><img src="/public/icons/delete.svg"></button>
+                <button class="up"><img src="/public/icons/uparrow.svg"></button>
+                <button class="down"><img src="/public/icons/downarrow.svg"></button>
             </div>
         </div>
     <% } %>
 
-    <button class="create"><img src="/public/icons/create.svg"></button>
-    <script src="/public/js/newScript.js"></script>
+    <button class="create" id="create"><img src="/public/icons/create.svg"></button>
+    <script src="/public/js/script.js"></script>
 </body>
 </html>

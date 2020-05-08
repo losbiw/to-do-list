@@ -1,10 +1,12 @@
+const body = document.querySelector("body");
+const createButton = document.querySelector(".create");
+const createIcon = createButton.querySelector('img');
 const editButtons = document.getElementsByClassName('edit');
 const deleteButtons = document.getElementsByClassName('delete');
-const createButton = document.querySelector('.create');
+const upArrows = document.getElementsByClassName('up');
+const downArrows = document.getElementsByClassName('down');
 const paragraphs = document.getElementsByClassName('task');
 const inputs = document.getElementsByClassName('input');
-const createIcon = createButton.querySelector('img');
-const body = document.querySelector('body');
 
 const styles = {
     editFil: 'invert(86%) sepia(97%) saturate(4755%) hue-rotate(62deg) brightness(99%) contrast(86%)',
@@ -18,76 +20,170 @@ const styles = {
     shadow: '-0.18vh -0.18vh 0.46vh rgba(255, 255, 255, 0.83) inset, 0.18vh 0.18vh 0.74vh rgba(217, 210, 200, 0.51) inset'
 };
 
-createSet();
-editHovers();
+setCreate();
+setEdits();
+setDelets();
+setArrows();
+setFilters(createIcon, styles.createFil);
 
-function editHovers(){
-    for(let i = 0; i < editButtons.length; i++){
-        const editIcon = editButtons[i].querySelector('img');
-        const deleteIcon = deleteButtons[i].querySelector('img');
+function createTask(){
+    const template = document.querySelector('.item.hidden');
+    let newItem = template.cloneNode(true);
+    newItem.classList.remove('hidden');
+    body.insertBefore(newItem, createButton);
+    replaceItems();
+    sendData();
+}
 
-        firstSet(editIcon, deleteIcon, createIcon);
+function replaceItems(){
+    let items = document.querySelectorAll('.item');
+    let clone = NodeList;
+    for(let i = 0; i < items.length; i++){
+        clone[i] = items[i].cloneNode(true);
+        items[i].parentNode.replaceChild(clone[i], items[i]);
+    }
+    setEdits();
+    setDelets();
+    setArrows();
+}
 
-        let handler = function(){
-            buttonHover(editIcon, editButtons[i], styles.editFil, styles.backCol, styles.shadow);
-        }
+function setArrows(){
+    for(let i = 0; i < upArrows.length; i++){
+        let upIcon = upArrows[i].querySelector('img');
+        let downIcon = downArrows[i].querySelector('img');
+
+        setFilters(upIcon, styles.createFil);
+        setFilters(downIcon, styles.createFil);
         
-        editButtons[i].addEventListener('mouseover', ()=>buttonHover(editIcon, editButtons[i], styles.backFil, styles.editCol, 'none'));
-        editButtons[i].addEventListener('mouseout', handler);
+        upArrows[i].addEventListener('mouseover', ()=>hoverOverFilter('create', upIcon, upArrows[i]));
+        upArrows[i].addEventListener('mouseout', ()=>hoverOutFilter('create', upIcon, upArrows[i]));
+        upArrows[i].addEventListener('click', ()=>arrowClick('up', i));
+
+        downArrows[i].addEventListener('mouseover', ()=>hoverOverFilter('create', downIcon, downArrows[i]));
+        downArrows[i].addEventListener('mouseout', ()=>hoverOutFilter('create', downIcon, downArrows[i]));
+        downArrows[i].addEventListener('click', ()=>arrowClick('down', i));
+    }
+}
+
+function arrowClick(action, index){
+    let currentItem = upArrows[index].parentNode.parentNode;
+    let nextItem = currentItem.nextElementSibling;
+    let icon;
+    
+    if(action == "up" && index > 1){
+        let replaceItem = upArrows[index - 1].parentNode.parentNode;
+        icon = upArrows[index].querySelector('img');
+        hoverOutFilter('create', icon, upArrows[index])
+        body.insertBefore(currentItem, replaceItem);
+    } 
+
+    else if(action == "down" && nextItem.id !== "create"){
+        icon = downArrows[index].querySelector('img');
+        hoverOutFilter('create', icon, downArrows[index])
+        body.insertBefore(nextItem, currentItem);
+    }
+    
+    else console.log("There's no such a function");
+
+    replaceItems();
+}
+
+function setEdits(){
+    for(let i = 0; i < editButtons.length; i++){
+        const icon = editButtons[i].querySelector('img');
+        
+        setFilters(icon, styles.editFil);
+        
         editButtons[i].addEventListener('click', ()=>{
-            editButtons[i].removeEventListener('mouseout', handler);
+            inputs[i].value = paragraphs[i].textContent;
             paragraphs[i].classList.add('hidden');
             inputs[i].classList.remove('hidden');
-            inputs[i].value = paragraphs[i].textContent;
 
-            inputs[i].addEventListener('keyup', e=>{
-                if(e.key === "Enter"){
+            inputs[i].addEventListener('keydown', e=>{
+                if(e.key == 'Enter'){
                     e.preventDefault();
-                    const data = inputs[i].value;
-                    paragraphs[i].textContent = data;
+                    if(paragraphs[i].textContent != inputs[i].value){
+                        paragraphs[i].textContent = inputs[i].value;
+                        sendData();
+                    }
                     paragraphs[i].classList.remove('hidden');
-                    inputs[i].classList.add('hidden'); 
-                    buttonHover(editIcon, editButtons[i], styles.editFil, styles.backCol, styles.shadow);
-                    editButtons[i].addEventListener('mouseout', handler);
+                    inputs[i].classList.add('hidden');
                 }
             });
         });
 
-        deleteButtons[i].addEventListener('mouseover', ()=>buttonHover(deleteIcon, deleteButtons[i], styles.backFil, styles.deleteCol, 'none'));
-        deleteButtons[i].addEventListener('mouseout', ()=>buttonHover(deleteIcon, deleteButtons[i], styles.deleteFil, styles.backCol, styles.shadow));
-        deleteButtons[i].addEventListener('click', ()=>{
-            let item = deleteButtons[i].parentNode.parentNode;
-            body.removeChild(item);
-            editHovers();
-        });
+        editButtons[i].addEventListener('mouseover', ()=>hoverOverFilter('edit', icon, editButtons[i]));
+        editButtons[i].addEventListener('mouseout', ()=>hoverOutFilter('edit', icon, editButtons[i]));
     }
 }
 
-function buttonHover(icon, background, iconColor, backColor, shadow){
+function setDelets(){
+    for(let deleteBut of deleteButtons){
+        const icon = deleteBut.querySelector('img');
+        
+        const deleteTask = function(){
+            const currentItem = deleteBut.parentNode.parentNode;
+            body.removeChild(currentItem);
+            replaceItems();
+            sendData();
+        }
+        
+        setFilters(icon, styles.deleteFil);
+
+        deleteBut.addEventListener('mouseover', ()=>hoverOverFilter('delete', icon, deleteBut));
+        deleteBut.addEventListener('mouseout', ()=>hoverOutFilter('delete', icon, deleteBut));
+        deleteBut.addEventListener('click', deleteTask);
+    }
+}
+
+function setCreate(){
+    const icon = createButton.querySelector('img');
+    createButton.addEventListener('click', createTask);
+    createButton.addEventListener('mouseover', ()=>hoverOverFilter('create', icon, createButton));
+    createButton.addEventListener('mouseout', ()=>hoverOutFilter('create', icon, createButton));
+}
+
+function hoverOverFilter(action, icon, background){
+    let iconColor = styles.backFil;
+    let backColor;
+    if(action == 'edit') backColor = styles.editCol;
+    else if(action == 'delete') backColor = styles.deleteCol;
+    else if(action == 'create') backColor = styles.createCol;
     icon.setAttribute('style', `filter: ${iconColor}`);
-    
-    background.setAttribute('style', 
-        `background-color: ${backColor}; 
-        transition: 500ms; box-shadow: ${shadow}`
-    );
+    background.setAttribute('style', `background-color: ${backColor};
+                                      box-shadow: none;
+    `);
 }
 
-function createSet(){
-    createIcon.setAttribute('style', `filter: ${styles.createFil}`);
-
-    createButton.addEventListener('mouseover', ()=>buttonHover(createIcon, createButton, styles.backFil, styles.createCol, 'none'));
-    createButton.addEventListener('mouseout', ()=>buttonHover(createIcon, createButton, styles.createFil, styles.backCol, styles.shadow));
-
-    createButton.addEventListener('click', ()=>{
-        let template = document.querySelector(".item.hidden");
-        let newTask = template.cloneNode(true);
-        newTask.classList.remove('hidden');
-        body.insertBefore(newTask, createButton);
-        editHovers();
-    });
+function hoverOutFilter(action, icon, background){
+    let backColor = styles.backCol;
+    let iconColor;
+    if(action == 'edit') iconColor = styles.editFil;
+    else if(action == 'delete') iconColor = styles.deleteFil;
+    else if(action == 'create') iconColor = styles.createFil;
+    icon.setAttribute('style', `filter: ${iconColor}`);
+    background.setAttribute('style', `background-color: ${backColor};
+                                      box-shadow: ${styles.shadow};
+    `);
 }
 
-function firstSet(editIcon, deleteIcon){
-    deleteIcon.setAttribute('style', `filter: ${styles.deleteFil}`);
-    editIcon.setAttribute('style', `filter: ${styles.editFil}`);
+function setFilters(icon, color){
+    icon.setAttribute('style', `filter: ${color}`);
+}
+
+function sendData(){
+    const id = localStorage.getItem('id');
+    let tasks = [];
+    for(let i = 1; i < paragraphs.length; i++){
+        tasks.push(paragraphs[i].textContent);
+    }
+    (async()=>{
+        const req = await fetch('./addData', {
+            headers: {
+                'Content-type': 'application/json' 
+            },
+            method: 'POST',
+            body: JSON.stringify({id: id, tasks: tasks})
+        });
+    })();
 }
