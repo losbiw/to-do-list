@@ -68,24 +68,21 @@ function setArrows(){
 function arrowClick(action, index){
     let currentItem = upArrows[index].parentNode.parentNode;
     let nextItem = currentItem.nextElementSibling;
-    let icon;
     
     if(action == "up" && index > 1){
         let replaceItem = upArrows[index - 1].parentNode.parentNode;
-        icon = upArrows[index].querySelector('img');
+        let icon = upArrows[index].querySelector('img');
         hoverOutFilter('create', icon, upArrows[index])
         body.insertBefore(currentItem, replaceItem);
+        replaceItems();
     } 
 
     else if(action == "down" && nextItem.id !== "create"){
-        icon = downArrows[index].querySelector('img');
+        let icon = downArrows[index].querySelector('img');
         hoverOutFilter('create', icon, downArrows[index])
         body.insertBefore(nextItem, currentItem);
+        replaceItems();
     }
-    
-    else console.log("There's no such a function");
-
-    replaceItems();
 }
 
 function setEdits(){
