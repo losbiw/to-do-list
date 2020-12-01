@@ -1,0 +1,12 @@
+#tasks{
+    flex-direction: column;
+}
+
+#tasks li{
+    margin-top: 1vmax;
+    box-shadow: none;
+}
+
+#tasks li:first-child{
+    margin-top: 0;
+}
