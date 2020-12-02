@@ -2,9 +2,17 @@
     flex-direction: column;
 }
 
-#tasks li{
+#tasks li, #tasks input{
     margin-top: 1vmax;
     box-shadow: none;
+}
+
+#tasks input{
+    border: none;
+}
+
+#tasks input:focus{
+    outline: none;
 }
 
 #tasks li:first-child{

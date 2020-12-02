@@ -1,7 +1,28 @@
 import React from 'react'
-import List from '../List/List'
 import './Tasks.css'
 
 export default function Tasks(props){
-    return <List id='tasks' data={ props.tasks } />
+    const { tasks, current, handleTasksChange } = props;
+    
+    const handleChange = e => {
+        const { value, dataset } = e.target;
+        
+        tasks[current].list[dataset.name] = value;
+        handleTasksChange({ tasks });
+    }
+
+    return(
+        <ul id='tasks' key='tasks'>
+            {
+                tasks[current].list.map((task, index) => {
+                    return(
+                        <input key={ `group${current}${index}` } 
+                                data-name={ index } 
+                                defaultValue={ task }
+                                onChange={ handleChange }/>
+                    )
+                })
+            }
+        </ul>
+    )
 }

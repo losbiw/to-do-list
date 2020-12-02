@@ -1,3 +1,15 @@
 #categories{
-    margin: 3vmax 0;
+    margin-bottom: 3vmax;
+}
+
+#categories .current{
+    background-color: black;
+}
+
+h2{
+    font-size: 1vmax;
+    font-weight: 500;
+    color: #BBC2D8;
+    margin: 0;
+    margin-bottom: 1.5vmax;
 }
