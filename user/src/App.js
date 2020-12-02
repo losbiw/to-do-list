@@ -19,15 +19,26 @@ export default class App extends Component{
         const data = [
             {
                 category: 'general',
-                list: ['wash balls', 'go to school']
+                list: [
+                    { value: 'clean dishes' },
+                    { value: 'go to school' }
+                ]
             },
             {
                 category: 'programming',
-                list: ['finish  erin', 'kill myself']
+                list: [
+                    { value: 'finish erin' },
+                    { value: 'todolist' }
+                ]
             }
         ];
-
         const currentGroupIndex = 0;
+
+        data.map(group => {
+            group.list.map(item => {
+                item.key = Math.random();
+            })
+        })
 
         this.setState({
             currentGroupIndex,
@@ -42,6 +53,8 @@ export default class App extends Component{
     render(){
         const { handleAppStateChange } = this;
         const { tasks, currentGroupIndex } = this.state;
+
+        console.log(tasks);
 
         return(
             <div>

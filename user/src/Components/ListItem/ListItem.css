@@ -3,14 +3,14 @@ ul{
     padding: 0;
 } 
 
-li, input{
+li{
     border-radius: 1.5vmax;
     font-size: 1.1vmax;
     padding: 1.5vmax;
     margin-right: 2vmax;
 }
 
-li, input{
+li{
     font-weight: 500;
     list-style: none;
     background-color: #16213e;

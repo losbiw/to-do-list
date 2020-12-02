@@ -7,7 +7,14 @@ export default function Tasks(props){
     const handleChange = e => {
         const { value, dataset } = e.target;
         
-        tasks[current].list[dataset.name] = value;
+        tasks[current].list[dataset.index].value = value;
+        handleTasksChange({ tasks });
+    }
+
+    const handleDelete = e => {
+        const { index } = e.target.dataset;
+
+        const deleted = tasks[current].list.splice(index, 1);
         handleTasksChange({ tasks });
     }
 
@@ -16,10 +23,17 @@ export default function Tasks(props){
             {
                 tasks[current].list.map((task, index) => {
                     return(
-                        <input key={ `group${current}${index}` } 
-                                data-name={ index } 
-                                defaultValue={ task }
-                                onChange={ handleChange }/>
+                        <li className='task' key={ task.key }>
+                            <button className='complete' 
+                                    onClick={ handleDelete } 
+                                    data-index={ index }>
+                                Complete
+                            </button>
+                            
+                            <input data-index={ index } 
+                                   defaultValue={ task.value }
+                                   onChange={ handleChange }/>
+                        </li>
                     )
                 })
             }

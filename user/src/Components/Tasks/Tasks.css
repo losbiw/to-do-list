@@ -1,18 +1,29 @@
 #tasks{
     flex-direction: column;
+    box-sizing: border-box;
 }
 
-#tasks li, #tasks input{
+#tasks .task{
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#tasks .task input{
+    border: none;
+    width: 100%;
+    font-size: 1.1vmax;
+    background-color: transparent;
+    color: white;
+}
+
+#tasks .task input:focus{
+    outline: none;
+}
+
+#tasks li{
     margin-top: 1vmax;
     box-shadow: none;
-}
-
-#tasks input{
-    border: none;
-}
-
-#tasks input:focus{
-    outline: none;
 }
 
 #tasks li:first-child{
