@@ -9,22 +9,13 @@
     background-color: transparent;
 }
 
-#create .add{
+#create #add{
     background-color: black;
-    display: none;
     padding: 0;
     width: 3.6vmax;
     height: 3.6vmax;
     border-radius: 1.8vmax;
 }
-
-
-/* #create .add:focus{
-    opacity: 0;
-}
-#create .add:focus + .options{
-    display: flex;
-} */
 
 #create button{
     border: none;
@@ -33,7 +24,7 @@
     outline: none;
 }
 
-#create .options{
+#create #options{
     background-color: aliceblue;
     display: flex;
     flex-direction: column;
@@ -43,12 +34,12 @@
     padding: 0.8vmax 4vmax 0.8vmax 1vmax;
 }
 
-#create .options button{
+#create #options button{
     font-weight: 500;
     background-color: transparent;
     font-size: 1.1vmax;
 }
 
-#create .options button:first-child{
+#create #options button:first-child{
     margin-bottom: 0.6vmax;
 }
