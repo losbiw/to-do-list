@@ -35,6 +35,8 @@ export default class App extends Component{
         const currentGroupIndex = 0;
 
         data.map(group => {
+            group.key = Math.random();
+
             group.list.map(item => {
                 item.key = Math.random();
             })
@@ -54,24 +56,22 @@ export default class App extends Component{
         const { handleAppStateChange } = this;
         const { tasks, currentGroupIndex } = this.state;
 
-        console.log(tasks);
+        const childProps = {
+            tasks,
+            handleAppStateChange,
+            current: currentGroupIndex,
+        }
 
         return(
             <div>
-                { typeof currentGroupIndex === 'number' && 
+                { tasks.length !== 0 && 
                     <div>
-                        <Categories tasks={ tasks }
-                                    handleGroupSwitch={ handleAppStateChange }
-                                    current={ currentGroupIndex } /> 
-                                        
-                        <Tasks tasks={ tasks }
-                            current={ currentGroupIndex }
-                            handleTasksChange={ handleAppStateChange }/>
+                        <h2>Categories</h2>
+                        <Categories { ...childProps } />                       
+                        <Tasks { ...childProps } />
                     </div>
                 }
-                <Create handleCreation={ handleAppStateChange }
-                        tasks={ tasks }
-                        current={ currentGroupIndex }/>
+                <Create { ...childProps }/>
             </div>
         )
     }
