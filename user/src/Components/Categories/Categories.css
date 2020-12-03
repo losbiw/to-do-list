@@ -6,6 +6,22 @@
     background-color: black;
 }
 
+#categories span{
+    border: none;
+    width: 100%;
+    font-size: 1.1vmax;
+    background-color: transparent;
+    color: white;
+}
+
+#categories span:focus{
+    outline: none;
+}
+
+/* #categories li > * {
+    pointer-events: none;
+} */
+
 h2{
     font-size: 1vmax;
     font-weight: 500;
