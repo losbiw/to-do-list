@@ -9,15 +9,16 @@
     box-sizing: border-box;
 }
 
-#tasks .task input{
+#tasks .task textarea{
     border: none;
     width: 100%;
     font-size: 1.1vmax;
     background-color: transparent;
     color: white;
+    box-sizing: border-box;
 }
 
-#tasks .task input:focus{
+#tasks .task textarea:focus{
     outline: none;
 }
 

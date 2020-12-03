@@ -2,20 +2,20 @@ import React from 'react'
 import './Tasks.css'
 
 export default function Tasks(props){
-    const { tasks, current, handleTasksChange } = props;
+    const { tasks, current, handleAppStateChange } = props;
     
     const handleChange = e => {
         const { value, dataset } = e.target;
         
         tasks[current].list[dataset.index].value = value;
-        handleTasksChange({ tasks });
+        handleAppStateChange({ tasks });
     }
 
     const handleDelete = e => {
         const { index } = e.target.dataset;
 
         const deleted = tasks[current].list.splice(index, 1);
-        handleTasksChange({ tasks });
+        handleAppStateChange({ tasks });
     }
 
     return(
@@ -30,9 +30,9 @@ export default function Tasks(props){
                                 Complete
                             </button>
                             
-                            <input data-index={ index } 
+                            <textarea data-index={ index } 
                                    defaultValue={ task.value }
-                                   onChange={ handleChange }/>
+                                   onChange={ handleChange } />
                         </li>
                     )
                 })

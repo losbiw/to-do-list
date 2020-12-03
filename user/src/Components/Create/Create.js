@@ -29,24 +29,25 @@ export default class Create extends Component{
     }
 
     handleNewTaskCreation = () => {
-        const { handleCreation, tasks, current } = this.props;
+        const { handleAppStateChange, tasks, current } = this.props;
 
         tasks[current].list.push({
             value: 'New Task',
             key: Math.random()
         })
-        handleCreation({ tasks })
+        handleAppStateChange({ tasks })
     }
 
     handleNewCategoryCreation = () => {
-        const { handleCreation, tasks } = this.props;
+        const { handleAppStateChange, tasks } = this.props;
 
         tasks.push({
             category: 'category',
-            list: []
+            list: [],
+            key: Math.random()
         });
 
-        handleCreation({ tasks });
+        handleAppStateChange({ tasks });
     }
 
     handleAddClick = () => {
