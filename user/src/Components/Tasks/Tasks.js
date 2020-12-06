@@ -9,12 +9,23 @@ export default function Tasks(props){
         
         tasks[current].list[dataset.index].value = value;
         handleAppStateChange({ tasks });
+
+        handleResize(e.target);
+    }
+
+    const handleResize = el => {
+        setTimeout(() => {
+            el.style.height = 'auto';
+
+            const { scrollHeight } = el;
+            el.style.height = scrollHeight + 'px';
+        }, 0)
     }
 
     const handleDelete = e => {
         const { index } = e.target.dataset;
 
-        const deleted = tasks[current].list.splice(index, 1);
+        tasks[current].list.splice(index, 1);
         handleAppStateChange({ tasks });
     }
 
@@ -31,8 +42,10 @@ export default function Tasks(props){
                             </button>
                             
                             <textarea data-index={ index } 
-                                   defaultValue={ task.value }
-                                   onChange={ handleChange } />
+                                      rows='1'
+                                      ref={ input => input && handleResize(input) }
+                                      defaultValue={ task.value }
+                                      onChange={ handleChange }/>
                         </li>
                     )
                 })

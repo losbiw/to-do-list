@@ -5,6 +5,7 @@
 
 #tasks .task{
     display: flex;
+    align-items: center;
     width: 100%;
     box-sizing: border-box;
 }
@@ -13,9 +14,14 @@
     border: none;
     width: 100%;
     font-size: 1.1vmax;
+    line-height: 1.7vmax;
     background-color: transparent;
     color: white;
     box-sizing: border-box;
+    resize: none;
+    overflow: hidden;
+    padding: 0;
+    height: auto;
 }
 
 #tasks .task textarea:focus{
