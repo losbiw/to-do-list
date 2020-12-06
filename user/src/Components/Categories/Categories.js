@@ -7,7 +7,8 @@ export default class Categories extends Component{
         super(props);
 
         this.state = {
-            contextMenu: undefined
+            contextMenu: undefined,
+            activeIndex: undefined
         }
     }
 
@@ -20,11 +21,18 @@ export default class Categories extends Component{
     }
 
     handleClickOutside = e => {
-        const { id } = e.target;
+        const { activeIndex, contextMenu } = this.state;
+        const { id, dataset } = e.target;
 
-        if(id !== 'context'){
+        if(contextMenu && id !== 'context'){
             this.setState({
                 contextMenu: undefined
+            })
+        }
+
+        if(dataset.index !== activeIndex && id !== 'Rename'){
+            this.setState({
+                activeIndex: undefined
             })
         }
     }
@@ -94,12 +102,17 @@ export default class Categories extends Component{
         
         tasks[parsed].category = e.target.value;
         handleAppStateChange({ tasks });
+
+        this.handleResize(e.target);
     }
 
-    componentDidUpdate(prevProps, prevState){
-        if(this.state.activeIndex !== prevState.activeIndex){
-            console.log(this.state);
-        }
+    handleResize = el => {
+        setTimeout(() => {
+            el.style.width = 0;
+
+            const { scrollWidth } = el;
+            el.style.width = scrollWidth + 'px';
+        }, 0)
     }
 
     render(){
@@ -119,13 +132,17 @@ export default class Categories extends Component{
                                     onContextMenu={ this.handleRightClick }
                                     data-index={ index }
                                     key={ key }>
-                                        <span role="textbox" 
-                                              data-index={ index }
-                                              onChange={ this.handleNameChange }
-                                              suppressContentEditableWarning={true}
-                                              contentEditable={ activeIndex === index } >
-                                            { category }
-                                        </span>
+                                        <input className={ activeIndex !== index ? 'disabled' : '' }
+                                               data-index={ index }
+                                               value={ category }
+                                               spellCheck='false'
+                                               ref={ input => {
+                                                        if(input){
+                                                            this.handleResize(input);
+                                                            activeIndex === index && input.focus();
+                                                        }
+                                               } }
+                                               onChange={ this.handleNameChange } />
                                 </li>
                             )
                         })

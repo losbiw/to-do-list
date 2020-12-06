@@ -1,8 +1,7 @@
 #create{
-    margin: 2vmax;
     position: fixed;
-    bottom: 0;
-    right: 0;
+    bottom: 2vmax;
+    right: 2vmax;
     display: flex;
     flex-direction: column;
     align-items: center;

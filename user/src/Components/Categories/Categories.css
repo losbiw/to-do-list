@@ -1,4 +1,6 @@
 #categories{
+    width: 100%;
+    overflow-x: auto;
     margin-bottom: 3vmax;
 }
 
@@ -6,21 +8,25 @@
     background-color: black;
 }
 
-#categories span{
+#categories li{
+    margin-right: 2vmax;
+}
+
+#categories input{
     border: none;
-    width: 100%;
+    width: auto;
     font-size: 1.1vmax;
     background-color: transparent;
     color: white;
 }
 
-#categories span:focus{
+#categories input:focus{
     outline: none;
 }
 
-/* #categories li > * {
+#categories .disabled{
     pointer-events: none;
-} */
+}
 
 h2{
     font-size: 1vmax;

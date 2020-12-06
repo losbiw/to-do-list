@@ -6,6 +6,7 @@ body{
     padding: 2vmax;
     background-color: #1e3063;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 *{

@@ -4,19 +4,96 @@ import Create from './Components/Create/Create'
 import Tasks from './Components/Tasks/Tasks'
 import './App.css'
 import './Components/ListItem/ListItem.css'
+import './Components/Scrollbar/Scrollbar.css'
 
 export default class App extends Component{
     constructor(props){
         super(props);
 
+        const { innerHeight, innerWidth } = window;
+
         this.state = {
             tasks: [],
-            currentGroupIndex: undefined
+            currentGroupIndex: undefined,
+            innerWidth,
+            innerHeight
         }
     }
 
     componentDidMount(){
+        window.addEventListener('resize', this.handleResize);
+
         const data = [
+            {
+                category: 'general',
+                list: [
+                    { value: 'clean dishes' },
+                    { value: 'go to school' }
+                ]
+            },
+            {
+                category: 'programming',
+                list: [
+                    { value: 'finish erin' },
+                    { value: 'todolist' }
+                ]
+            },
+            {
+                category: 'general',
+                list: [
+                    { value: 'clean dishes' },
+                    { value: 'go to school' }
+                ]
+            },
+            {
+                category: 'programming',
+                list: [
+                    { value: 'finish erin' },
+                    { value: 'todolist' }
+                ]
+            },
+            {
+                category: 'general',
+                list: [
+                    { value: 'clean dishes' },
+                    { value: 'go to school' }
+                ]
+            },
+            {
+                category: 'programming',
+                list: [
+                    { value: 'finish erin' },
+                    { value: 'todolist' }
+                ]
+            },
+            {
+                category: 'general',
+                list: [
+                    { value: 'clean dishes' },
+                    { value: 'go to school' }
+                ]
+            },
+            {
+                category: 'programming',
+                list: [
+                    { value: 'finish erin' },
+                    { value: 'todolist' }
+                ]
+            },
+            {
+                category: 'general',
+                list: [
+                    { value: 'clean dishes' },
+                    { value: 'go to school' }
+                ]
+            },
+            {
+                category: 'programming',
+                list: [
+                    { value: 'finish erin' },
+                    { value: 'todolist' }
+                ]
+            },
             {
                 category: 'general',
                 list: [
@@ -45,6 +122,19 @@ export default class App extends Component{
         this.setState({
             currentGroupIndex,
             tasks: data,
+        })
+    }
+
+    componentWillUnmount(){
+        window.removeEventListener('resize', this.handleResize);
+    }
+
+    handleResize = () => {
+        const { innerHeight, innerWidth } = window;
+        
+        this.setState({
+            innerHeight,
+            innerWidth
         })
     }
 
