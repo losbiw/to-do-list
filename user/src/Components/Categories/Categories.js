@@ -127,7 +127,7 @@ export default class Categories extends Component{
                             const { category, key } = task;
     
                             return(
-                                <li className={ index === current ? 'current' : '' }
+                                <li className={ index === current ? 'current' : 'category' }
                                     onClick={ this.handleItemClick }
                                     onContextMenu={ this.handleRightClick }
                                     data-index={ index }
