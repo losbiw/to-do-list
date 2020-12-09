@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { ReactComponent as Add } from 'assets/add.svg'
 import './Create.css'
 
 export default class Create extends Component{
@@ -71,7 +72,7 @@ export default class Create extends Component{
                         </button>
                     </div>
                   : <button id="add" onClick={ handleAddClick }>
-                      Cock
+                      <Add />
                     </button>
                 }
             </div>

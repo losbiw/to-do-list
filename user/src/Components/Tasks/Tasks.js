@@ -1,4 +1,5 @@
 import React from 'react'
+import { ReactComponent as Complete } from 'assets/complete.svg'
 import './Tasks.css'
 
 export default function Tasks(props){
@@ -38,7 +39,7 @@ export default function Tasks(props){
                             <button className='complete' 
                                     onClick={ handleDelete } 
                                     data-index={ index }>
-                                Complete
+                                <Complete />
                             </button>
                             
                             <textarea data-index={ index } 
