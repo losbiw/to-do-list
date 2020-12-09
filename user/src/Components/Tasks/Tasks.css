@@ -11,16 +11,36 @@
 }
 
 #tasks .task .complete{
-    margin-right: 1.5vmax;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2vw;
+    height: 2vw;
+    border-radius: 50%;
+    border: none;
+    margin-right: 1.85vw;
+    background-color: #908EF3;
+    outline: none;
+}
+
+#tasks .task .complete:hover svg{
+    transition: 400ms;
+    fill: #ebebeb;
+}
+
+#tasks .task .complete svg{
+    width: 85%;
+    height: 85%;
+    pointer-events: none;
 }
 
 #tasks .task textarea{
     border: none;
     width: 100%;
-    font-size: 1.1vmax;
-    line-height: 1.7vmax;
+    font-size: 1.65vw;
+    line-height: 2.5vw;
     background-color: transparent;
-    color: white;
+    color: #ebebeb;
     box-sizing: border-box;
     resize: none;
     overflow: hidden;
@@ -33,10 +53,10 @@
 }
 
 #tasks li{
-    margin-top: 1vmax;
+    margin-top: 2vw;
     box-shadow: none;
 }
 
 #tasks li:first-child{
-    margin-top: 0;
+    margin-top: 1.6vw;
 }

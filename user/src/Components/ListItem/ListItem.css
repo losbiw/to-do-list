@@ -4,14 +4,14 @@ ul{
 } 
 
 li{
-    border-radius: 1.5vmax;
-    font-size: 1.1vmax;
-    padding: 1.5vmax;
+    border-radius: 2.21vw;
+    font-size: 1.65vw;
+    padding: 1.85vw 2.15vw;
 }
 
 li{
-    font-weight: 500;
+    font-weight: 400;
     list-style: none;
-    background-color: #16213e;
-    color: #e7e7e9;
+    background-color: #1D1E21;
+    color: #ebebeb;
 }

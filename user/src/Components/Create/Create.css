@@ -1,7 +1,7 @@
 #create{
     position: fixed;
     bottom: 2vmax;
-    right: 2vmax;
+    right: 3vmax;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,11 +9,25 @@
 }
 
 #create #add{
-    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #908EF3;
     padding: 0;
-    width: 3.6vmax;
-    height: 3.6vmax;
-    border-radius: 1.8vmax;
+    width: 4vmax;
+    height: 4vmax;
+    border-radius: 50%;
+}
+
+#create #add:hover svg{
+    transition: 300ms;
+    fill:#ebebeb;
+}
+
+#create #add svg{
+    pointer-events: none;
+    width: 50%;
+    height: 50%;
 }
 
 #create button{
@@ -24,7 +38,8 @@
 }
 
 #create #options{
-    background-color: aliceblue;
+    background-color: #ebebeb;
+    color: #1D1E21;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -36,7 +51,6 @@
 #create #options button{
     font-weight: 500;
     background-color: transparent;
-    font-size: 1.1vmax;
 }
 
 #create #options button:first-child{

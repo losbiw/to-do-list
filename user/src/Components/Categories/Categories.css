@@ -1,23 +1,41 @@
 #categories{
     width: 100%;
     overflow-x: auto;
-    margin-bottom: 3vmax;
+}
+
+#categories::-webkit-scrollbar{
+    height: 2.25vw;
+}
+#categories::-webkit-scrollbar-track,
+#categories::-webkit-scrollbar-thumb 
+{
+	border-bottom: 2vw solid transparent;
+	background-clip: padding-box;
 }
 
 #categories .current{
-    background-color: black;
+    border-color: #908EF3;
+    transition: 300ms;
 }
 
 #categories li{
-    margin-right: 2vmax;
+    margin: 1.5vw 2vw 1.5vw 0;
+    /* margin-bottom: 1.5vw; */
+    border: transparent 0.26vw solid;
+    box-sizing: border-box;
+}
+
+#categories .category:hover input{
+    color: #908EF3;
+    transition: 300ms;
 }
 
 #categories input{
     border: none;
     width: auto;
-    font-size: 1.1vmax;
+    font-size: 1.6vw;
     background-color: transparent;
-    color: white;
+    color: #ebebeb;
 }
 
 #categories input:focus{
@@ -26,12 +44,4 @@
 
 #categories .disabled{
     pointer-events: none;
-}
-
-h2{
-    font-size: 1vmax;
-    font-weight: 500;
-    color: #BBC2D8;
-    margin: 0;
-    margin-bottom: 1.5vmax;
 }
