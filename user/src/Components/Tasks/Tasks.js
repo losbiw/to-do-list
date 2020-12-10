@@ -10,17 +10,14 @@ export default function Tasks(props){
         
         tasks[current].list[dataset.index].value = value;
         handleAppStateChange({ tasks });
-
-        handleResize(e.target);
     }
 
     const handleResize = el => {
-        setTimeout(() => {
-            el.style.height = 'auto';
+        el.rows = 1;
 
-            const { scrollHeight } = el;
-            el.style.height = scrollHeight + 'px';
-        }, 0)
+        const lineHeight = 2.5 * (window.innerWidth / 100);
+        const rows = ~~(el.scrollHeight / lineHeight);
+        el.rows = rows;
     }
 
     const handleDelete = e => {
@@ -43,6 +40,7 @@ export default function Tasks(props){
                             </button>
                             
                             <textarea data-index={ index } 
+                                      spellCheck='false'
                                       rows='1'
                                       ref={ input => input && handleResize(input) }
                                       defaultValue={ task.value }
