@@ -13,5 +13,6 @@ li{
     font-weight: 400;
     list-style: none;
     background-color: #1D1E21;
+    box-shadow: 9px 9px 12px 12px rgba(0, 0, 0, 0.09);
     color: #ebebeb;
 }
