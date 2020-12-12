@@ -138,7 +138,7 @@ export default class App extends Component{
         })
     }
 
-    handleAppStateChange = data =>{
+    handleAppStateChange = data => {
         this.setState(data)
     }
 
@@ -157,7 +157,8 @@ export default class App extends Component{
                 { tasks.length !== 0 && 
                     <div>
                         <h2>Categories</h2>
-                        <Categories { ...childProps } />                       
+                        <Categories { ...childProps } />      
+                        <h2>Tasks</h2>                 
                         <Tasks { ...childProps } />
                     </div>
                 }

@@ -5,7 +5,8 @@
         ["module-resolver", {
             "root": ["./user/src"],
             "alias": {
-              "@assets": "./assets"
+              "@assets": "./assets",
+              "@modules": "./modules"
             }
           }]
     ]
