@@ -32,6 +32,7 @@
     width: 85%;
     height: 85%;
     pointer-events: none;
+    fill: #121213;
 }
 
 #tasks .task textarea{
