@@ -16,7 +16,7 @@ export default function Tasks(props){
         el.rows = 1;
 
         const lineHeight = 2.5 * (window.innerWidth / 100);
-        const rows = ~~(el.scrollHeight / lineHeight);
+        const rows = Math.round(el.scrollHeight / lineHeight);
         el.rows = rows;
     }
 
