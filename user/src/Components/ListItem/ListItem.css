@@ -7,6 +7,7 @@ li{
     border-radius: 2.21vw;
     font-size: 1.65vw;
     padding: 1.85vw 2.15vw;
+    outline: none;
 }
 
 li{
@@ -15,4 +16,8 @@ li{
     background-color: #1D1E21;
     box-shadow: 9px 9px 12px 12px rgba(0, 0, 0, 0.09);
     color: #ebebeb;
+}
+
+div{
+    outline: none;
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Categories from './Components/Categories/Categories'
 import Create from './Components/Create/Create'
-import Tasks from './Components/Tasks/Tasks'
+import TasksList from './Components/TasksList/TasksList'
 import './App.css'
 import './Components/ListItem/ListItem.css'
 import './Components/Scrollbar/Scrollbar.css'
@@ -35,6 +35,23 @@ export default class App extends Component{
                 category: 'programming',
                 list: [
                     { value: 'finish erin' },
+                    { value: 'todolist' },
+                    { value: 'todolist' },
+                    { value: 'todolist' },
+                    { value: 'todolist' },
+                    { value: 'todolist' },
+                    { value: 'todolist' },
+                    { value: 'todolist' },
+                    { value: 'todolist' },
+                    { value: 'todolist' },
+                    { value: 'todolist' },
+                    { value: 'todolist' },
+                    { value: 'todolist' },
+                    { value: 'todolist' },
+                    { value: 'todolist' },
+                    { value: 'todolist' },
+                    { value: 'todolist' },
+                    { value: 'todolist' },
                     { value: 'todolist' }
                 ]
             },
@@ -147,7 +164,7 @@ export default class App extends Component{
         const { tasks, currentGroupIndex } = this.state;
 
         const childProps = {
-            tasks,
+            tasks: [ ...tasks ],
             handleAppStateChange,
             current: currentGroupIndex,
         }
@@ -159,10 +176,10 @@ export default class App extends Component{
                         <h2>Categories</h2>
                         <Categories { ...childProps } />      
                         <h2>Tasks</h2>                 
-                        <Tasks { ...childProps } />
+                        <TasksList { ...childProps } />
                     </div>
                 }
-                <Create { ...childProps }/>
+                {/* <Create { ...childProps }/> */}
             </div>
         )
     }
