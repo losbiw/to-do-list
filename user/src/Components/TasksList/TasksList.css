@@ -1,0 +1,13 @@
+#tasks{
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+#tasks li{
+    margin-top: 2vw;
+    box-shadow: none;
+}
+
+#tasks li:first-child{
+    margin-top: 1.6vw;
+}

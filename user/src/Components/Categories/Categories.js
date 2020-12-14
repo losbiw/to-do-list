@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import ContextMenu from '../ContextMenu/ContextMenu'
+import Category from '../Category/Category'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import './Categories.css'
 
 export default class Categories extends Component{
@@ -20,64 +22,6 @@ export default class Categories extends Component{
         document.removeEventListener('click', this.handleClickOutside);
     }
 
-    handleClickOutside = e => {
-        const { activeIndex, contextMenu } = this.state;
-        const { id, dataset } = e.target;
-
-        if(contextMenu && id !== 'context'){
-            this.setState({
-                contextMenu: undefined
-            })
-        }
-
-        if(dataset.index !== activeIndex && id !== 'Rename'){
-            this.setState({
-                activeIndex: undefined
-            })
-        }
-    }
-
-    handleRightClick = e => {
-        e.preventDefault();
-
-        const { tasks, handleAppStateChange, current } = this.props;
-
-        const Menu = {
-            coords: {
-                height: e.clientY,
-                width: e.clientX
-            },
-            actions: [
-                {
-                    title: 'Delete',
-                    action: () => {
-                        const index = this.parseElementProperty(e, 'index');
-                        tasks.splice(index, 1);
-
-                        const updatedIndex = current >= tasks.length ? tasks.length - 1 : current;
-
-                        handleAppStateChange({ 
-                            tasks,
-                            currentGroupIndex: updatedIndex
-                        });
-                        this.setState({ contextMenu: undefined })
-                    }
-                },
-                {
-                    title: 'Rename',
-                    action: () => {
-                        const index = this.parseElementProperty(e, 'index');
-                        this.setState({ activeIndex: index })
-                    }
-                }
-            ]
-        }
-        
-        this.setState({
-            contextMenu: Menu
-        })
-    }
-
     parseElementProperty = (e, property) => {
         const value = e.target.dataset[property];
         
@@ -89,68 +33,67 @@ export default class Categories extends Component{
         }
     }
 
-    handleItemClick = e => {
-        const { handleAppStateChange } = this.props;
-        const parsed = this.parseElementProperty(e, 'index');
-
-        handleAppStateChange({ currentGroupIndex: parsed });
+    handleStateChange = data => {
+        this.setState(data)
     }
 
-    handleNameChange = e => {
-        const { tasks, handleAppStateChange } = this.props;
-        const parsed = this.parseElementProperty(e, 'index');
-        
-        tasks[parsed].category = e.target.value;
-        handleAppStateChange({ tasks });
+    handleDragEnd = result => {
+        const { tasks, handleAppStateChange, current } = this.props;
+        const { destination, source } = result;
 
-        this.handleResize(e.target);
-    }
+        if(destination){
+            const dragged = tasks[source.index];
+            const { key } = tasks[current];
 
-    handleResize = el => {
-        setTimeout(() => {
-            el.style.width = 0;
+            tasks.splice(source.index, 1);
+            tasks.splice(destination.index, 0, dragged);
 
-            const { scrollWidth } = el;
-            el.style.width = scrollWidth + 'px';
-        }, 0)
+            const updatedIndex = tasks.findIndex(category => category.key === key);
+
+            handleAppStateChange({ 
+                tasks,
+                currentGroupIndex: updatedIndex
+            });
+        }
     }
 
     render(){
-        const { tasks, current } = this.props;
+        const { tasks, current, handleAppStateChange } = this.props;
         const { contextMenu, activeIndex } = this.state;
 
         return(
-            <div id="categories">
-                <ul>
-                    {
-                        tasks.map((task, index) => {
-                            const { category, key } = task;
-    
-                            return(
-                                <li className={ index === current ? 'current' : 'category' }
-                                    onClick={ this.handleItemClick }
-                                    onContextMenu={ this.handleRightClick }
-                                    data-index={ index }
-                                    key={ key }>
-                                        <input className={ activeIndex !== index ? 'disabled' : '' }
-                                               data-index={ index }
-                                               value={ category }
-                                               spellCheck='false'
-                                               ref={ input => {
-                                                        if(input){
-                                                            this.handleResize(input);
-                                                            activeIndex === index && input.focus();
-                                                        }
-                                               } }
-                                               onChange={ this.handleNameChange } />
-                                </li>
-                            )
-                        })
+            <DragDropContext onDragEnd={ this.handleDragEnd }>
+                <Droppable droppableId='categories' 
+                           direction='horizontal'
+                           ignoreContainerClipping={ true }>
+                    { provided => 
+                        <ul id='categories' 
+                            ref={ provided.innerRef }
+                            { ...provided.droppableProps }
+                        >
+                            {
+                                tasks.map((task, index) => {
+                                    const { category, key } = task;
+                                    
+                                    return <Category task={ task }
+                                                     index={ index }
+                                                     category={category}
+                                                     dragKey={ key }
+                                                     current={ current }
+                                                     tasks={ tasks }
+                                                     activeIndex={ activeIndex }
+                                                     handleStateChange={ this.handleStateChange }
+                                                     handleAppStateChange={ handleAppStateChange }
+                                                     key={ key } /> 
+                                })
+                            }
+                            { provided.placeholder }
+                        </ul>
                     }
-                </ul>
+                </Droppable>
 
                 { contextMenu && <ContextMenu data={ contextMenu }/> }
-            </div>
+            </DragDropContext>
         )
     }
 }

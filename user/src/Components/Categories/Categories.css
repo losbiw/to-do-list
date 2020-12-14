@@ -18,7 +18,18 @@
     transition: 300ms;
 }
 
+#categories .hidden{
+    position: absolute;
+    visibility: hidden;
+    display: inline-block;
+    white-space: pre;
+    font-size: 1.6vw;
+}
+
 #categories li{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 1.5vw 2vw 1.5vw 0;
     border: transparent 0.26vw solid;
     box-sizing: border-box;
@@ -34,6 +45,7 @@
     font-size: 1.6vw;
     background-color: transparent;
     color: #ebebeb;
+    padding: 0;
 }
 
 #categories input:focus{
