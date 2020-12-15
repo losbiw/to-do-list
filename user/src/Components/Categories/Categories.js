@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ContextMenu from '../ContextMenu/ContextMenu'
 import Category from '../Category/Category'
-import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { Container } from 'react-smooth-dnd'
 import './Categories.css'
 
 export default class Categories extends Component{
@@ -22,14 +22,20 @@ export default class Categories extends Component{
         document.removeEventListener('click', this.handleClickOutside);
     }
 
-    parseElementProperty = (e, property) => {
-        const value = e.target.dataset[property];
-        
-        try{
-           return parseInt(value, 10)
+    handleClickOutside = e => {
+        const { activeIndex, contextMenu } = this.state;
+        const { id, dataset } = e.target;
+
+        if(contextMenu && id !== 'context'){
+            this.setState({
+                contextMenu: undefined
+            })
         }
-        catch(err){
-            throw err
+
+        if(dataset.index !== activeIndex && id !== 'Rename'){
+            this.setState({
+                activeIndex: undefined
+            })
         }
     }
 
@@ -37,24 +43,22 @@ export default class Categories extends Component{
         this.setState(data)
     }
 
-    handleDragEnd = result => {
+    handleDrop = result => {
         const { tasks, handleAppStateChange, current } = this.props;
-        const { destination, source } = result;
+        const { removedIndex, addedIndex } = result;
 
-        if(destination){
-            const dragged = tasks[source.index];
-            const { key } = tasks[current];
+        const dragged = tasks[removedIndex];
+        const { key } = tasks[current];
 
-            tasks.splice(source.index, 1);
-            tasks.splice(destination.index, 0, dragged);
+        tasks.splice(removedIndex, 1);
+        tasks.splice(addedIndex, 0, dragged);
 
-            const updatedIndex = tasks.findIndex(category => category.key === key);
+        const updatedIndex = tasks.findIndex(category => category.key === key);
 
-            handleAppStateChange({ 
-                tasks,
-                currentGroupIndex: updatedIndex
-            });
-        }
+        handleAppStateChange({ 
+            tasks,
+            currentGroupIndex: updatedIndex
+        });
     }
 
     render(){
@@ -62,38 +66,29 @@ export default class Categories extends Component{
         const { contextMenu, activeIndex } = this.state;
 
         return(
-            <DragDropContext onDragEnd={ this.handleDragEnd }>
-                <Droppable droppableId='categories' 
-                           direction='horizontal'
-                           ignoreContainerClipping={ true }>
-                    { provided => 
-                        <ul id='categories' 
-                            ref={ provided.innerRef }
-                            { ...provided.droppableProps }
-                        >
-                            {
-                                tasks.map((task, index) => {
-                                    const { category, key } = task;
-                                    
-                                    return <Category task={ task }
-                                                     index={ index }
-                                                     category={category}
-                                                     dragKey={ key }
-                                                     current={ current }
-                                                     tasks={ tasks }
-                                                     activeIndex={ activeIndex }
-                                                     handleStateChange={ this.handleStateChange }
-                                                     handleAppStateChange={ handleAppStateChange }
-                                                     key={ key } /> 
-                                })
-                            }
-                            { provided.placeholder }
-                        </ul>
+            <div id='categories'>
+                <Container orientation='horizontal'
+                            onDrop={ this.handleDrop }>
+                    {
+                        tasks.map((task, index) => {
+                            const { category, key } = task;
+                            
+                            return <Category task={ task }
+                                            index={ index }
+                                            category={category}
+                                            dragKey={ key }
+                                            current={ current }
+                                            tasks={ tasks }
+                                            activeIndex={ activeIndex }
+                                            handleStateChange={ this.handleStateChange }
+                                            handleAppStateChange={ handleAppStateChange }
+                                            key={ key } /> 
+                        })
                     }
-                </Droppable>
+                </Container>
 
                 { contextMenu && <ContextMenu data={ contextMenu }/> }
-            </DragDropContext>
+            </div>
         )
     }
 }

@@ -1,49 +1,38 @@
 import React from 'react'
-import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { Container } from 'react-smooth-dnd'
 import Task from '../Task/Task'
 import './TasksList.css'
 
 export default function Tasks(props){
     const { tasks, current, handleAppStateChange } = props;
 
-    const handleDragEnd = result => {
+    const handleDrop = result => {
+        const { removedIndex, addedIndex } = result;
         const { list } = tasks[current];
-        const { destination, source } = result;
 
-        if(destination){
-            const dragged = list[source.index];
-        
-            list.splice(source.index, 1);
-            list.splice(destination.index, 0, dragged);
+        const dragged = list[removedIndex];
+    
+        list.splice(removedIndex, 1);
+        list.splice(addedIndex, 0, dragged);
 
-            handleAppStateChange({ tasks });
-        }
+        handleAppStateChange({ tasks });
     }
 
     return(
-        <DragDropContext onDragEnd={ handleDragEnd }>
-            <Droppable droppableId='tasks'>
-                { provided =>
-                    <ul id='tasks' key='tasks'
-                        ref={ provided.innerRef }
-                        { ...provided.droppableProps }
-                    >
-                        {
-                            tasks[current].list.map((task, index) => {                              
-                                return(
-                                    <Task handleAppStateChange={ handleAppStateChange } 
-                                        task={ task }
-                                        index={ index }
-                                        { ...props }
-                                        key={ task.key }/>
-                                )
-                            })
-                        }
-
-                        { provided.placeholder }
-                    </ul>
+        <div id='tasks'>
+            <Container onDrop={ handleDrop }>
+                {
+                    tasks[current].list.map((task, index) => {                              
+                        return(
+                            <Task handleAppStateChange={ handleAppStateChange } 
+                                task={ task }
+                                index={ index }
+                                { ...props }
+                                key={ task.key }/>
+                        )
+                    })
                 }
-            </Droppable>
-        </DragDropContext>
+            </Container>
+        </div>
     )
 }

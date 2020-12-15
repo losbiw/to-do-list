@@ -170,16 +170,16 @@ export default class App extends Component{
         }
 
         return(
-            <div>
+            <div id='container'>
                 { tasks.length !== 0 && 
-                    <div>
+                    <div id="data">
                         <h2>Categories</h2>
                         <Categories { ...childProps } />      
                         <h2>Tasks</h2>                 
                         <TasksList { ...childProps } />
                     </div>
                 }
-                {/* <Create { ...childProps }/> */}
+                <Create { ...childProps }/>
             </div>
         )
     }

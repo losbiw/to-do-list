@@ -1,5 +1,5 @@
 import React from 'react'
-import { Draggable } from 'react-beautiful-dnd'
+import { Draggable } from 'react-smooth-dnd'
 import { ReactComponent as Complete } from 'assets/complete.svg'
 import './Task.css'
 
@@ -30,27 +30,21 @@ export default function Task(props){
     }
 
     return(
-        <Draggable draggableId={ `${task.key}` } index={ index }>
-            { provided => 
-                <li className='task'
-                    { ...provided.draggableProps }
-                    { ...provided.dragHandleProps }
-                    ref={ provided.innerRef }
-                >
-                    <button className='complete' 
-                            onClick={ handleDelete } 
-                            data-index={ index }>
-                        <Complete />
-                    </button>
-                
-                    <textarea data-index={ index } 
-                            spellCheck='false'
-                            rows='1'
-                            ref={ input => input && handleResize(input) }
-                            defaultValue={ task.value }
-                            onChange={ handleChange }/>
-                </li>
-            }
+        <Draggable key={ index }>
+            <li className='task'>
+                <button className='complete' 
+                        onClick={ handleDelete } 
+                        data-index={ index }>
+                    <Complete />
+                </button>
+            
+                <textarea data-index={ index } 
+                        spellCheck='false'
+                        rows='1'
+                        ref={ input => input && handleResize(input) }
+                        defaultValue={ task.value }
+                        onChange={ handleChange }/>
+            </li>
         </Draggable>
     )
 }

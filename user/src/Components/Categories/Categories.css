@@ -1,6 +1,6 @@
 #categories{
-    width: 100%;
-    overflow-x: auto;
+    display: flex;
+    overflow: auto;
 }
 
 #categories::-webkit-scrollbar{
@@ -27,10 +27,8 @@
 }
 
 #categories li{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 1.5vw 2vw 1.5vw 0;
+    display: inline-block;
+    margin: 1.5vw 2vw 2vw 0;
     border: transparent 0.26vw solid;
     box-sizing: border-box;
 }
