@@ -1,5 +1,6 @@
 import React from 'react'
 import { Draggable } from 'react-smooth-dnd'
+import './Category.css'
 
 export default function Category(props){
     const { index, tasks, category, current, activeIndex, handleAppStateChange, handleStateChange } = props;

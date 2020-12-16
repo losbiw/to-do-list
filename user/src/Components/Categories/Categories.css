@@ -13,62 +13,8 @@
 	background-clip: padding-box;
 }
 
-#categories .current{
-    border-color: #908EF3;
-    transition: 300ms;
-}
-
-#categories .hidden{
-    position: absolute;
-    visibility: hidden;
-    display: inline-block;
-    white-space: pre;
-    font-size: 1.6vw;
-}
-
-#categories li{
-    display: inline-block;
-    margin: 1.5vw 2vw 1.5vw 0;
-    border: transparent 0.26vw solid;
-    box-sizing: border-box;
-}
-
-#categories .category:hover input{
-    color: #908EF3;
-    transition: 300ms;
-}
-
-#categories input{
-    border: none;
-    font-size: 1.6vw;
-    background-color: transparent;
-    color: #ebebeb;
-    padding: 0;
-}
-
-#categories input:focus{
-    outline: none;
-}
-
-#categories .disabled{
-    pointer-events: none;
-}
-
 @media (max-aspect-ratio: 1/1){
     #categories::-webkit-scrollbar{
         height: 0;
-    }
-    
-    #categories .hidden{
-        font-size: 2.2vh;
-    }
-    
-    #categories li{
-        margin: 2.6vh 2.5vh 2.6vh 0;
-        border: transparent 0.33vh solid;
-    }
-    
-    #categories input{
-        font-size: 2.25vh;
     }
 }
