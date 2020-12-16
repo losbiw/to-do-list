@@ -46,3 +46,20 @@
 #tasks .task textarea:focus{
     outline: none;
 }
+
+@media (max-aspect-ratio: 1/1){
+    #tasks .task{
+        padding: 2.3vh 2vh;
+    }
+
+    #tasks .task .complete{
+        width: 3.7vh;
+        height: 3.7vh;
+        margin-right: 2.15vh;
+    }
+
+    #tasks .task textarea{
+        font-size: 2.25vh;
+        line-height: 3.4vh;
+    }
+}

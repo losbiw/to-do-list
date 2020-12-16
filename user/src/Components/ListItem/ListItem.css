@@ -21,3 +21,11 @@ li{
 div{
     outline: none;
 }
+
+@media (max-aspect-ratio: 1/1){
+    li{
+        border-radius: 3.1vh;
+        font-size: 2.25vh;
+        padding: 2.15vh 2.5vh;
+    }
+}

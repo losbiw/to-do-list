@@ -33,3 +33,12 @@ h2{
     color: #898989;
     margin: 0;
 }
+
+@media (max-aspect-ratio: 1/1){
+    #container{
+        padding: 2.5vh 3.2vh;
+    }
+    h2{
+        font-size: 2vh;
+    }
+}

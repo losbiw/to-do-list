@@ -14,10 +14,12 @@ export default function Task(props){
     }
 
     const handleResize = el => {
+        const { innerHeight, innerWidth } = window;
         el.rows = 1;
 
-        const lineHeight = 2.5 * (window.innerWidth / 100);
-        console.log(lineHeight);
+        const lineHeight = innerWidth > innerHeight 
+                            ? 2.5 * (innerWidth / 100)
+                            : 3.4 * (innerHeight / 100);
         const rows = Math.round(el.scrollHeight / lineHeight);
         el.rows = rows;
     }
@@ -43,6 +45,7 @@ export default function Task(props){
                         rows='1'
                         ref={ input => input && handleResize(input) }
                         defaultValue={ task.value }
+                        size={ task.value.length }
                         onChange={ handleChange }/>
             </li>
         </Draggable>

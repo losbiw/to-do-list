@@ -60,3 +60,24 @@
 #create #options button:first-child{
     margin-bottom: 0.6vmax;
 }
+
+@media (max-aspect-ratio: 1/1){
+    #create{
+        bottom: 2.5vh;
+        right: 3.2vh;
+    }
+    
+    #create #add{
+        width: 5vh;
+        height: 5vh;
+    }
+    
+    #create button{
+        font-size: 2vh;
+    }
+
+    #create #options{
+        border-radius: 2.5vh;
+        padding: 2vh 2.5vw;
+    }
+}
