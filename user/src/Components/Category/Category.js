@@ -30,7 +30,7 @@ export default function Category(props){
     }
 
     const handleRightClick = e => {
-        e.preventDefault();
+        if(e.cancelable) e.preventDefault();
 
         const Menu = {
             coords: {
