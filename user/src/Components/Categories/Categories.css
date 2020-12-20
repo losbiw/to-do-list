@@ -1,20 +1,14 @@
 #categories{
     display: flex;
-    overflow: auto;
+    overflow-x: auto;
 }
 
-#categories::-webkit-scrollbar{
-    height: 2.25vw;
-}
-#categories::-webkit-scrollbar-track,
-#categories::-webkit-scrollbar-thumb 
-{
-	border-bottom: 2vw solid transparent;
-	background-clip: padding-box;
+.margin-bottom{
+    margin-bottom: 2vw;
 }
 
-@media (max-aspect-ratio: 1/1){
-    #categories::-webkit-scrollbar{
-        height: 0;
+@media (max-aspect-ratio: 1/1){ 
+    .margin-bottom{
+        margin-bottom: 2.6vh;
     }
 }

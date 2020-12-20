@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import ContextMenu from '../ContextMenu/ContextMenu'
 import Category from '../Category/Category'
 import { Container } from 'react-smooth-dnd'
+import areEqual from 'modules/areEqual'
 import './Categories.css'
 
 export default class Categories extends Component{
@@ -12,14 +13,32 @@ export default class Categories extends Component{
             contextMenu: undefined,
             activeIndex: undefined
         }
+
+        this.listRef = createRef(null);
     }
 
     componentDidMount(){
         document.addEventListener('click', this.handleClickOutside);
+        this.componentDidUpdate();
     }
 
     componentWillUnmount(){
         document.removeEventListener('click', this.handleClickOutside);
+    }
+
+    componentDidUpdate(prevProps){
+        const { listRef, props } = this;
+        const { current } = listRef;
+        const size = prevProps?.size;
+
+        if(current && ((size && !areEqual.objects(size, props.size)) || props.size)){
+            const { clientWidth, scrollWidth } = current;
+            current.className = 'no';
+            
+            if(scrollWidth > clientWidth){
+                current.className = 'margin-bottom';
+            }
+        }
     }
 
     handleClickOutside = e => {
@@ -66,7 +85,7 @@ export default class Categories extends Component{
         const { contextMenu, activeIndex } = this.state;
 
         return(
-            <div id='categories'>
+            <div id='categories' ref={ this.listRef }>
                 <Container orientation='horizontal'
                             onDrop={ this.handleDrop }>
                     {
