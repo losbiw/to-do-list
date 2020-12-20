@@ -15,8 +15,10 @@ export default class App extends Component{
         this.state = {
             tasks: [],
             currentGroupIndex: undefined,
-            innerWidth,
-            innerHeight
+            size: {
+                innerHeight,
+                innerWidth
+            }
         }
     }
 
@@ -150,8 +152,10 @@ export default class App extends Component{
         const { innerHeight, innerWidth } = window;
         
         this.setState({
-            innerHeight,
-            innerWidth
+            size: {
+                innerHeight,
+                innerWidth
+            }
         })
     }
 
@@ -161,9 +165,10 @@ export default class App extends Component{
 
     render(){
         const { handleAppStateChange } = this;
-        const { tasks, currentGroupIndex } = this.state;
+        const { tasks, currentGroupIndex, size } = this.state;
 
         const childProps = {
+            size,
             tasks: [ ...tasks ],
             handleAppStateChange,
             current: currentGroupIndex,
