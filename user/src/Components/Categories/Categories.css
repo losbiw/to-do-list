@@ -1,6 +1,7 @@
 #categories{
     display: flex;
     overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .margin-bottom{
