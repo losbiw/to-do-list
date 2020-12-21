@@ -13,7 +13,7 @@
 
 #categories li{
     display: inline-block;
-    margin: 1.5vw 2vw 2vw 0;
+    margin: 1.5vw 2vw 0 0;
     border: transparent 0.26vw solid;
     box-sizing: border-box;
 }
@@ -45,7 +45,7 @@
     }
     
     #categories li{
-        margin: 2.6vh 2.5vh 2.6vh 0;
+        margin: 2.6vh 2.5vh 0 0;
         border: transparent 0.33vh solid;
     }
     

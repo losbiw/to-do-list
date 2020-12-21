@@ -2,6 +2,7 @@
     display: flex;
     overflow-x: auto;
     overflow-y: hidden;
+    padding-bottom: 2vw;
 }
 
 .margin-bottom{
@@ -9,6 +10,9 @@
 }
 
 @media (max-aspect-ratio: 1/1){ 
+    #categories{
+        padding-bottom: 2.6vh;
+    }
     .margin-bottom{
         margin-bottom: 2.6vh;
     }
