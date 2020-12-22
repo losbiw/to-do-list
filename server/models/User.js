@@ -5,4 +5,4 @@ const User = new mongoose.Schema({
     tasks: Array
 })
 
-module.exports = mongoose.model('users', User);
+module.exports = mongoose.model('Users', User);
