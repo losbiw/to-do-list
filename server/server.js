@@ -39,15 +39,11 @@ app.use(
       credentials: true
     })
 );
-
 app.use('/auth', require('./routes/auth'));
 
-app.get('/', () => {
+app.get('/', (req, res) => {
     console.log('this is main');
-})
-
-app.get('*', () => {
-    console.log('this is error');
+    res.send(req.user);
 })
 
 app.listen(PORT, () => {

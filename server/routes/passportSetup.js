@@ -1,18 +1,14 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const User = require('../models/User');
 
 passport.serializeUser(function(user, done) {
-    done(null, user);
+    done(null, user.googleID);
 });
 
-passport.deserializeUser((id, done) => {
-    User.findById(id)
-      .then(user => {
-        done(null, user);
-      })
-      .catch(e => {
-        done(new Error("Failed to deserialize an user"));
-      });
+passport.deserializeUser(async(id, done) => {
+    const deserialized = await User.findOne({ googleID: id });
+    done(null, deserialized);
 });
 
 passport.use(new GoogleStrategy({
@@ -20,8 +16,19 @@ passport.use(new GoogleStrategy({
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: '/auth/google/callback'
     },
-    (_token, _tokenSecret, profile, done) => {
-        return done(null, profile);
+    async(_token, _tokenSecret, profile, done) => {
+        const searchQuery = { googleID: profile.id }
+        const currentUser = await User.findOne(searchQuery);
+        
+        if(currentUser){
+          done(null, currentUser);
+        }
+        else{
+          const newUser = await User.create(searchQuery);
+          await newUser.save();
+
+          done(null, newUser)
+        }
     })
 )
 

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const User = new mongoose.Schema({
-    id: String,
-    tasks: Array
+    googleID: String,
+    tasks: { type: 'Array', default: [] }
 })
 
 module.exports = mongoose.model('Users', User);
