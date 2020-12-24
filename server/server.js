@@ -1,6 +1,5 @@
 const { join } = require('path');
 const cookieSession = require('cookie-session');
-const session = require('express-session');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const express = require('express');
@@ -40,10 +39,10 @@ app.use(
     })
 );
 app.use('/auth', require('./routes/auth'));
+app.use('/data', require('./routes/data'));
 
 app.get('/', (req, res) => {
-    console.log('this is main');
-    res.send(req.user);
+    res.redirect('http://localhost:8080/');
 })
 
 app.listen(PORT, () => {

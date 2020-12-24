@@ -7,7 +7,11 @@
             "alias": {
               "@assets": "./assets",
               "@modules": "./modules"
-            }
-          }]
+          }
+        }],
+        [
+          "@babel/plugin-transform-runtime",
+          { "regenerator": true }
+      ]
     ]
 }
