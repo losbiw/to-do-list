@@ -33,7 +33,7 @@ export default class Categories extends Component{
 
         if(current && ((size && !areEqual.objects(size, props.size)) || props.size)){
             const { clientWidth, scrollWidth } = current;
-            current.className = 'no';
+            current.className = '';
             
             if(scrollWidth > clientWidth){
                 current.className = 'margin-bottom';

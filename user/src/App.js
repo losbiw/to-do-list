@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Categories from './Components/Categories/Categories'
 import Create from './Components/Create/Create'
 import TasksList from './Components/TasksList/TasksList'
+import SignIn from './Components/SignIn/SignIn'
 import './App.css'
 import './Components/ListItem/ListItem.css'
 import './Components/Scrollbar/Scrollbar.css'
@@ -22,126 +23,42 @@ export default class App extends Component{
         }
     }
 
-    componentDidMount(){
+    async componentDidMount(){
         window.addEventListener('resize', this.handleResize);
 
-        const data = [
-            {
-                category: 'general',
-                list: [
-                    { value: 'clean dishes' },
-                    { value: 'go to school' }
-                ]
-            },
-            {
-                category: 'programming',
-                list: [
-                    { value: 'finish erin' },
-                    { value: 'todolist' },
-                    { value: 'todolist' },
-                    { value: 'todolist' },
-                    { value: 'todolist' },
-                    { value: 'todolist' },
-                    { value: 'todolist' },
-                    { value: 'todolist' },
-                    { value: 'todolist' },
-                    { value: 'todolist' },
-                    { value: 'todolist' },
-                    { value: 'todolist' },
-                    { value: 'todolist' },
-                    { value: 'todolist' },
-                    { value: 'todolist' },
-                    { value: 'todolist' },
-                    { value: 'todolist' },
-                    { value: 'todolist' },
-                    { value: 'todolist' }
-                ]
-            },
-            {
-                category: 'general',
-                list: [
-                    { value: 'clean dishes' },
-                    { value: 'go to school' }
-                ]
-            },
-            {
-                category: 'programming',
-                list: [
-                    { value: 'finish erin' },
-                    { value: 'todolist' }
-                ]
-            },
-            {
-                category: 'general',
-                list: [
-                    { value: 'clean dishes' },
-                    { value: 'go to school' }
-                ]
-            },
-            {
-                category: 'programming',
-                list: [
-                    { value: 'finish erin' },
-                    { value: 'todolist' }
-                ]
-            },
-            {
-                category: 'general',
-                list: [
-                    { value: 'clean dishes' },
-                    { value: 'go to school' }
-                ]
-            },
-            {
-                category: 'programming',
-                list: [
-                    { value: 'finish erin' },
-                    { value: 'todolist' }
-                ]
-            },
-            {
-                category: 'general',
-                list: [
-                    { value: 'clean dishes' },
-                    { value: 'go to school' }
-                ]
-            },
-            {
-                category: 'programming',
-                list: [
-                    { value: 'finish erin' },
-                    { value: 'todolist' }
-                ]
-            },
-            {
-                category: 'general',
-                list: [
-                    { value: 'clean dishes' },
-                    { value: 'go to school' }
-                ]
-            },
-            {
-                category: 'programming',
-                list: [
-                    { value: 'finish erin' },
-                    { value: 'todolist' }
-                ]
+        const data = await fetch('http://localhost:5000/data/', {
+            method: "GET",
+            credentials: "include",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Credentials": true
             }
-        ];
-        const currentGroupIndex = 0;
+        });
 
-        data.map(group => {
-            group.key = Math.random();
+        try{
+            const res = await data.json();
+            const { tasks } = res;
 
-            group.list.map(item => {
-                item.key = Math.random();
+            tasks.map(group => {
+                group.key = Math.random();
+
+                group.list.map(item => {
+                    item.key = Math.random();
+                })
             })
-        })
 
-        this.setState({
-            currentGroupIndex,
-            tasks: data,
-        })
+            this.setState({
+                currentGroupIndex: 0,
+                tasks: tasks,
+            })
+        }
+        catch{
+            this.setState({
+                currentGroupIndex: 0,
+                tasks: null
+            })
+        }
     }
 
     componentWillUnmount(){
@@ -167,25 +84,30 @@ export default class App extends Component{
         const { handleAppStateChange } = this;
         const { tasks, currentGroupIndex, size } = this.state;
 
-        const childProps = {
-            size,
-            tasks: [ ...tasks ],
-            handleAppStateChange,
-            current: currentGroupIndex,
+        if(tasks !== null){
+            const childProps = {
+                size,
+                tasks: [ ...tasks ],
+                handleAppStateChange,
+                current: currentGroupIndex,
+            }
+    
+            return(
+                <div id='container'>
+                    { tasks.length !== 0 && 
+                        <div id="data">
+                            <h2>Categories</h2>
+                            <Categories { ...childProps } />      
+                            <h2>Tasks</h2>                 
+                            <TasksList { ...childProps } />
+                        </div>
+                    }
+                    <Create { ...childProps }/>
+                </div>
+            )
         }
-
-        return(
-            <div id='container'>
-                { tasks.length !== 0 && 
-                    <div id="data">
-                        <h2>Categories</h2>
-                        <Categories { ...childProps } />      
-                        <h2>Tasks</h2>                 
-                        <TasksList { ...childProps } />
-                    </div>
-                }
-                <Create { ...childProps }/>
-            </div>
-        )
+        else{
+            return <SignIn />
+        }
     }
 }
