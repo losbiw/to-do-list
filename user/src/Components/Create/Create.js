@@ -32,6 +32,10 @@ export default class Create extends Component{
     handleNewTaskCreation = () => {
         const { handleAppStateChange, tasks, current } = this.props;
 
+        if(!tasks[current]){
+            this.handleNewCategoryCreation();
+        }
+
         tasks[current].list.push({
             value: 'New Task',
             key: Math.random()
@@ -43,7 +47,7 @@ export default class Create extends Component{
         const { handleAppStateChange, tasks } = this.props;
 
         tasks.push({
-            category: 'category',
+            category: 'Category',
             list: [],
             key: Math.random()
         });
