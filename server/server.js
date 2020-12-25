@@ -18,6 +18,9 @@ mongoose.connect(process.env.MONGO_DB_CONNECT, () => {
     console.log('MongoDB is connected');
 });
 
+app.use(express.json()) 
+app.use(express.urlencoded({extended: false}))
+
 app.use(
     cookieSession({
       name: "session",
