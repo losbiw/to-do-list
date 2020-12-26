@@ -31,7 +31,7 @@ export default class Categories extends Component{
         const { current } = listRef;
         const size = prevProps?.size;
 
-        if(current && ((size && !areEqual.objects(size, props.size)) || props.size)){
+        if(current && ((size && !areEqual(size, props.size)) || props.size)){
             const { clientWidth, scrollWidth } = current;
             current.className = '';
             
