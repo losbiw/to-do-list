@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { ReactComponent as Add } from 'assets/add.svg'
+import { ReactComponent as List } from 'assets/Creation/list.svg'
+import { ReactComponent as Task } from 'assets/Creation/task.svg'
+import { ReactComponent as Add } from 'assets/Creation/add.svg'
 import './Create.css'
 
 export default class Create extends Component{
@@ -36,14 +38,12 @@ export default class Create extends Component{
             this.handleNewCategoryCreation();
         }
 
-        const copy = JSON.parse(JSON.stringify(tasks));
-
-        copy[current].list.push({
+        tasks[current].list.push({
             value: 'New Task',
             key: Math.random()
         });
 
-        handleAppStateChange({ tasks: copy })
+        handleAppStateChange({ tasks })
     }
 
     handleNewCategoryCreation = () => {
@@ -51,7 +51,11 @@ export default class Create extends Component{
 
         tasks.push({
             category: 'Category',
-            list: [],
+            deletable: true,
+            list: [{
+                value: 'New Task',
+                key: Math.random()
+            }],
             key: Math.random()
         });
 
@@ -72,9 +76,11 @@ export default class Create extends Component{
                 { this.state.areOptionsActive 
                   ? <div id="options">
                         <button id='task' onClick={ handleNewTaskCreation }>
+                            <Task />
                             Task
                         </button>
                         <button id='category' onClick={ handleNewCategoryCreation }>
+                            <List />
                             Category
                         </button>
                     </div>

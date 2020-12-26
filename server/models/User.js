@@ -4,6 +4,7 @@ const User = new mongoose.Schema({
     googleID: String,
     tasks: { type: mongoose.Schema.Types.Mixed, default: [{
         category: 'General',
+        deletable: true,
         list: [
             { value: 'Your first task!' },
         ]
