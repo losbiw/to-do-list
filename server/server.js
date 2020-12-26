@@ -24,9 +24,7 @@ app.use(express.urlencoded({extended: false}))
 app.use(
     cookieSession({
       name: "session",
-      keys: [process.env.COOKIE_KEY],
-      expires: false,
-      maxAge: 24 * 60 * 60 * 100
+      keys: [process.env.COOKIE_KEY]
     })
 );
 app.use(cookieParser());
@@ -44,7 +42,7 @@ app.use(
 app.use('/auth', require('./routes/auth'));
 app.use('/data', require('./routes/data'));
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
     res.redirect('http://localhost:8080/');
 })
 
