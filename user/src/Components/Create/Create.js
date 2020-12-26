@@ -72,9 +72,9 @@ export default class Create extends Component{
         const { handleNewTaskCreation, handleNewCategoryCreation, handleAddClick } = this;
         
         return(
-            <div id="create">
+            <div id='create'>
                 { this.state.areOptionsActive 
-                  ? <div id="options">
+                  ? <div id='options'>
                         <button id='task' onClick={ handleNewTaskCreation }>
                             <Task />
                             Task
@@ -84,7 +84,7 @@ export default class Create extends Component{
                             Category
                         </button>
                     </div>
-                  : <button id="add" onClick={ handleAddClick }>
+                  : <button id='add' onClick={ handleAddClick }>
                       <Add />
                     </button>
                 }

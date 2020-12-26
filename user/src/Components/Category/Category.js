@@ -1,9 +1,13 @@
 import React from 'react'
 import { Draggable } from 'react-smooth-dnd'
+import { ReactComponent as Edit } from 'assets/Context/edit.svg'
+import { ReactComponent as Deletable } from 'assets/Context/deletable.svg'
+import { ReactComponent as Delete } from 'assets/Context/delete.svg'
 import './Category.css'
 
 export default function Category(props){
-    const { index, tasks, category, current, activeIndex, handleAppStateChange, handleStateChange } = props;
+    const { index, tasks, category, current, activeIndex,  menuIndex } = props.data;
+    const { handleAppStateChange, handleStateChange, handleCategoryDelete } = props.handlers;
 
     const parseElementProperty = (e, property) => {
         const value = e.target.dataset[property];
@@ -32,39 +36,44 @@ export default function Category(props){
     const handleRightClick = e => {
         if(e.cancelable) e.preventDefault();
 
+        const { clientX, clientY } = e.nativeEvent;
+        const { offsetTop, offsetLeft, offsetParent, clientHeight, clientWidth } = e.nativeEvent.target;
+        const { offsetTop: parentOffsetTop, offsetLeft: parentOffsetLeft } = offsetParent;
+
+        const parsed = parseElementProperty(e, 'index');
+
         const Menu = {
             coords: {
-                height: e.clientY,
-                width: e.clientX
+                height: clientY || offsetTop + parentOffsetTop + clientHeight / 1.8,
+                width: clientX || offsetLeft + parentOffsetLeft + clientWidth / 1.75
             },
             actions: [
                 {
-                    title: 'Delete',
+                    title: 'Rename',
+                    Icon: Edit,
+                    action: () => handleStateChange({ activeIndex: parsed })
+                },
+                {
+                    title: 'Deletable',
+                    Icon: Deletable,
                     action: () => {
-                        const index = parseElementProperty(e, 'index');
-                        tasks.splice(index, 1);
-
-                        const updatedIndex = current >= tasks.length ? tasks.length - 1 : current;
-
-                        handleAppStateChange({ 
-                            tasks,
-                            currentGroupIndex: updatedIndex
-                        });
-                        handleStateChange({ contextMenu: undefined })
+                        const { deletable } = tasks[parsed];
+                        tasks[parsed].deletable = !deletable;
+                        handleAppStateChange({ tasks })
                     }
                 },
                 {
-                    title: 'Rename',
-                    action: () => {
-                        const index = parseElementProperty(e, 'index');
-                        handleStateChange({ activeIndex: index })
-                    }
+                    title: 'Delete',
+                    disabled: !tasks[parsed].deletable,
+                    Icon: Delete,
+                    action: () => handleCategoryDelete(parsed)
                 }
             ]
         }
         
         handleStateChange({
-            contextMenu: Menu
+            contextMenu: Menu,
+            menuIndex: undefined
         });
     }
 
@@ -76,14 +85,22 @@ export default function Category(props){
                 data-index={ index }
                 ref={ item => {
                     if(item){
+                        const index = parseElementProperty({ target: item }, 'index');
                         const hidden = item.querySelector('div');
                         const input = item.querySelector('input');
 
                         const width = Math.round(hidden.scrollWidth);
                         input.style.width = width + 'px';
+                       
+                        if(index === menuIndex){
+                            const contextMenuEvent = document.createEvent('HTMLEvents');
+                            contextMenuEvent.initEvent('contextmenu', true, false);
+
+                            item.dispatchEvent(contextMenuEvent);
+                        }
                     }
                 }}
-                >
+            >
                 <div className='hidden'>{ category }</div>
 
                 <input className={ activeIndex !== index ? 'disabled' : '' }
