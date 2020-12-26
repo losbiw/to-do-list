@@ -46,3 +46,28 @@
     margin: 0;
     margin-left: 1.5vw;
 }
+
+@media (max-aspect-ratio: 1/1){
+    #sign-in h1{
+        font-size: 14.5vw;
+    }
+
+    #sign-in li{
+        border-radius: 7.2vw;
+    }
+    
+    #sign-in a{
+        padding: 3.4vw 5.8vw;
+    }
+    
+    #sign-in img{
+        height: 8vw;
+        width: 8vw;
+    }
+    
+    #sign-in p{
+        font-size: 4.5vw;
+        margin-left: 3.5vw;
+    }
+    
+}

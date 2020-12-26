@@ -41,23 +41,44 @@
 }
 
 #create #options{
-    background-color: #ebebeb;
+    background-color: rgba(235, 235, 235, 0.95);
     color: #1D1E21;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    border-radius: 2.21vw;
-    padding: 1.4vw 1.8vw;
+    border-radius: 1.3vw;
+    padding: 1vw 0.8vw;
     box-shadow: 9px 9px 12px 12px rgba(0, 0, 0, 0.09);
+    z-index: 5;
 }
 
 #create #options button{
+    padding: 0.5vw;
+    padding-right: 2.3vw;
+    display: flex;
+    align-items: center;
+    color: #1D1E21;
     background-color: transparent;
+    font-size: 1.2vw;
+    font-weight: 500;
+    border: none;
+    border-radius: 0.6vw;
+    transition: 200ms;
 }
 
-#create #options button:first-child{
-    margin-bottom: 0.6vmax;
+#create #options button:hover{
+    background-color: #d4d4d4;
+}
+
+#create #options svg{
+    width: 1.7vw;
+    height: 1.7vw;
+    margin-right: 0.72vw;
+}
+
+#create #options svg path{
+    fill: #1D1E21;
 }
 
 @media (max-aspect-ratio: 1/1){
@@ -67,16 +88,25 @@
     }
     
     #create #add{
-        width: 5vh;
-        height: 5vh;
+        width: 6vh;
+        height: 6vh;
     }
     
-    #create button{
-        font-size: 2vh;
-    }
-
     #create #options{
-        border-radius: 2.5vh;
-        padding: 2vh 2.5vh;
+        border-radius: 2vh;
+        padding: 2vh 1.5vh;
+    }
+    
+    #create #options button{
+        padding: 1vh;
+        padding-right: 4vh;
+        font-size: 2.5vh;
+        border-radius: 1vh;
+    }
+    
+    #create #options svg{
+        width: 3.2vh;
+        height: 3.2vh;
+        margin-right: 1vh;
     }
 }

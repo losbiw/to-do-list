@@ -20,7 +20,7 @@
 
 #categories .category:hover input{
     color: #908EF3;
-    transition: 300ms;
+    transition: color 300ms;
 }
 
 #categories input{
@@ -46,7 +46,7 @@
     
     #categories li{
         margin: 2.6vh 2.5vh 0 0;
-        border: transparent 0.33vh solid;
+        border: transparent 0.37vh solid;
     }
     
     #categories input{

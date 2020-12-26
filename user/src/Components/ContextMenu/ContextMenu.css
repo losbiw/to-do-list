@@ -1,20 +1,51 @@
 #context{
     position: absolute;
-    background-color: #ebebeb;
+    background-color: rgba(235, 235, 235, 0.95);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    border-radius: 1.8vw;
-    padding: 1.5vw 4vw 1.5vw 1vw;
+    border-radius: 1.3vw;
+    padding: 1vw 0.8vw;
+    box-shadow: 9px 9px 12px 12px rgba(0, 0, 0, 0.09);
+    z-index: 5;
 }
 
 #context button{
+    padding: 0.5vw;
+    padding-right: 2.3vw;
+    display: flex;
+    align-items: center;
     color: #1D1E21;
     background-color: transparent;
     font-size: 1.2vw;
+    font-weight: 500;
     border: none;
-    margin-bottom: 0.6vw;
+    border-radius: 0.6vw;
+    transition: 200ms;
+}
+
+#context .disabled{
+    background-color: #c0bfbf;
+    color: #5b5e68;
+}
+
+#context .disabled svg path{
+    fill: #5b5e68;
+}
+
+#context button:hover{
+    background-color: #d4d4d4;
+}
+
+#context svg{
+    width: 1.7vw;
+    height: 1.7vw;
+    margin-right: 0.72vw;
+}
+
+#context svg path{
+    fill: #1D1E21;
 }
 
 #context button:last-child{
@@ -23,4 +54,24 @@
 
 #context button:focus{
     outline: none;
+}
+
+@media (max-aspect-ratio: 1/1){
+    #context{
+        border-radius: 2vh;
+        padding: 2vh 1.5vh;
+    }
+    
+    #context button{
+        padding: 1vh;
+        padding-right: 4vh;
+        font-size: 2.5vh;
+        border-radius: 1vh;
+    }
+    
+    #context svg{
+        width: 3.2vh;
+        height: 3.2vh;
+        margin-right: 1vh;
+    }
 }
