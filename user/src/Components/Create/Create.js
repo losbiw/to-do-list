@@ -36,11 +36,14 @@ export default class Create extends Component{
             this.handleNewCategoryCreation();
         }
 
-        tasks[current].list.push({
+        const copy = JSON.parse(JSON.stringify(tasks));
+
+        copy[current].list.push({
             value: 'New Task',
             key: Math.random()
-        })
-        handleAppStateChange({ tasks })
+        });
+
+        handleAppStateChange({ tasks: copy })
     }
 
     handleNewCategoryCreation = () => {
