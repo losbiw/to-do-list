@@ -9,10 +9,7 @@ function compareObjects(obj1, obj2){
         for(let key in obj1){
             const current = obj1[key];
 
-            if(typeof current === 'object' && !areEqual(current, obj2[key])){
-                return false
-            }
-            else if(current !== obj2[key] && typeof current !== 'object' && !Array.isArray(current)){
+            if(!areEqual(current, obj2[key])){
                 return false
             }
         }
@@ -27,10 +24,7 @@ function compareArrays(arr1, arr2){
     }
     else{
         for(const [index, value] of arr1.entries()){
-            if(typeof value === 'object' && !areEqual(value, arr2[index])){
-                return false
-            }
-            else if(typeof value !== 'object' && value !== arr2[index]){
+            if(!areEqual(value, arr2[index])){
                 return false
             }
         }
