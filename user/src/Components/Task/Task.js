@@ -1,10 +1,10 @@
 import React from 'react'
 import { Draggable } from 'react-smooth-dnd'
-import { ReactComponent as Complete } from 'assets/complete.svg'
+import { ReactComponent as Complete } from 'assets/Task/complete.svg'
 import './Task.css'
 
 export default function Task(props){
-    const { index, task, current, handleAppStateChange, tasks } = props;
+    const { index, task, current, tasks, handleAppStateChange, handleCategoryDelete } = props;
 
     const handleChange = e => {
         const { value, dataset } = e.target;
@@ -26,8 +26,14 @@ export default function Task(props){
 
     const handleDelete = e => {
         const { index } = e.target.dataset;
+        const { list, deletable } = tasks[current];
 
-        tasks[current].list.splice(index, 1);
+        list.splice(index, 1);
+        
+        if(list.length === 0 && deletable){
+            handleCategoryDelete(current);
+        }
+
         handleAppStateChange({ tasks });
     }
 

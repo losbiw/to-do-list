@@ -26,10 +26,11 @@ export default class App extends Component{
     }
 
     async componentDidMount(){
-        const { handleResize, handleUnload, changeKeyProperties } = this;
+        const { handleResize, handleDataUpdate, changeKeyProperties } = this;
 
         window.addEventListener('resize', handleResize);
-        window.addEventListener('beforeunload', handleUnload);
+        window.addEventListener('beforeunload', handleDataUpdate);
+        window.addEventListener('visibilitychange', handleDataUpdate);
 
         const data = await fetch('http://localhost:5000/data/', {
             method: 'GET',
@@ -43,14 +44,16 @@ export default class App extends Component{
 
         try{
             const res = await data.json();
-            const { tasks } = res;
+            const { tasks, userName, photoURL } = res;
 
             const updated = changeKeyProperties(tasks, false);
 
             this.setState({
+                userName,
+                photoURL,
                 currentGroupIndex: 0,
                 tasks: updated,
-                initialTasks: updated
+                initialTasks: JSON.parse(JSON.stringify(updated))
             })
         }
         catch{
@@ -62,7 +65,10 @@ export default class App extends Component{
     }
 
     componentWillUnmount(){
-        window.removeEventListener('resize', this.handleResize);
+        const { handleResize, handleDataUpdate } = this;
+
+        window.removeEventListener('resize', handleResize);
+        window.removeEventListener('visibilitychange', handleDataUpdate);
     }
 
     changeKeyProperties = (obj, isRemoving) =>{
@@ -82,13 +88,13 @@ export default class App extends Component{
         return obj
     }
 
-    handleUnload = () => {
+    handleDataUpdate = async() => {
         const { tasks, initialTasks } = this.state;
 
-        if(!areEqual(tasks, initialTasks)){
+        if(tasks && !areEqual(tasks, initialTasks)){
             const keylessData = this.changeKeyProperties(tasks, true);
 
-            fetch('http://localhost:5000/data/update', {
+            await fetch('http://localhost:5000/data/update', {
                 method: 'POST', 
                 mode: 'cors',
                 credentials: 'include',
@@ -111,34 +117,54 @@ export default class App extends Component{
         })
     }
 
+    handleCategoryDelete = index => {
+        const { tasks, currentGroupIndex: current } = this.state;
+        let updatedIndex;
+
+        tasks.splice(index, 1);
+
+        if(tasks.length === 0) updatedIndex = 0;
+        else if(current >= tasks.length) updatedIndex = tasks.length - 1;
+        else if(current > index) updatedIndex = current - 1;
+        else updatedIndex = current;
+
+        this.setState({ 
+            tasks,
+            currentGroupIndex: updatedIndex
+        });
+    }
+
     handleAppStateChange = data => {
         this.setState(data)
     }
 
     render(){
-        const { handleAppStateChange } = this;
-        const { tasks, currentGroupIndex, size } = this.state;
+        const { handleAppStateChange, handleCategoryDelete } = this;
+        const { tasks, currentGroupIndex, size, userName, photoURL } = this.state;
 
         if(tasks !== null){
             const childProps = {
                 size,
-                tasks: [ ...tasks ],
+                tasks,
                 handleAppStateChange,
+                handleCategoryDelete,
                 current: currentGroupIndex,
             }
     
             return(
                 <div id='container'>
+                    <Profile {...{ userName, photoURL }}/>
+
                     { tasks.length !== 0 && 
-                        <div id="data">
+                        <div id='data'>
                             <h2>Categories</h2>
                             <Categories { ...childProps } />      
                             <h2>Tasks</h2>                 
                             <TasksList { ...childProps } />
                         </div>
                     }
+
                     <Create { ...childProps }/>
-                    <Profile />
                 </div>
             )
         }
