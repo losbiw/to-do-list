@@ -11,7 +11,9 @@ export default class Categories extends Component{
 
         this.state = {
             contextMenu: undefined,
-            activeIndex: undefined
+            activeIndex: undefined,
+            menuIndex: undefined,
+            isLeave: false
         }
 
         this.listRef = createRef(null);
@@ -78,29 +80,63 @@ export default class Categories extends Component{
             tasks,
             currentGroupIndex: updatedIndex
         });
+
+        this.setState({
+            contextMenu: undefined
+        });
+    }
+
+    handleDragEnd = result => {
+        if(this.state.isLeave){
+            this.setState({
+                menuIndex: result.payload,
+                isLeave: false
+            })
+        }
+    }
+
+    handleDragLeave = () => {
+        this.setState({
+            isLeave: true
+        })
     }
 
     render(){
-        const { tasks, current, handleAppStateChange } = this.props;
-        const { contextMenu, activeIndex } = this.state;
+        const { handleDrop, handleDragEnd, handleDragLeave, listRef, handleStateChange } = this;
+        const { tasks, current, handleAppStateChange, handleCategoryDelete } = this.props;
+        const { contextMenu, activeIndex, menuIndex } = this.state;
 
         return(
-            <div id='categories' ref={ this.listRef }>
+            <div id='categories' ref={ listRef }>
                 <Container orientation='horizontal'
-                            onDrop={ this.handleDrop }>
+                           onDrop={ handleDrop }
+                           onDragLeave={ handleDragLeave }
+                           onDragEnd={ handleDragEnd }
+                           getChildPayload={ index => index }
+                >
                     {
                         tasks.map((task, index) => {
                             const { category, key } = task;
+
+                            const categoryProps = {
+                                handlers: {
+                                    handleStateChange,
+                                    handleAppStateChange,
+                                    handleCategoryDelete
+                                },
+                                data: {
+                                    task,
+                                    index,
+                                    category,
+                                    current,
+                                    tasks,
+                                    activeIndex,
+                                    menuIndex,
+                                    dragKey: key
+                                }
+                            }
                             
-                            return <Category task={ task }
-                                            index={ index }
-                                            category={category}
-                                            dragKey={ key }
-                                            current={ current }
-                                            tasks={ tasks }
-                                            activeIndex={ activeIndex }
-                                            handleStateChange={ this.handleStateChange }
-                                            handleAppStateChange={ handleAppStateChange }
+                            return <Category { ...categoryProps }
                                             key={ key } /> 
                         })
                     }
