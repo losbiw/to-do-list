@@ -7,8 +7,14 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(async(id, done) => {
-    const deserialized = await User.findOne({ googleID: id });
-    done(null, deserialized);
+    await User.findOne({ googleID: id }, (err, user) => {
+      if(err){
+        return done(err, null);
+      }
+      else{
+        return done(null, user);
+      }
+    });
 });
 
 passport.use(new GoogleStrategy({
@@ -17,14 +23,18 @@ passport.use(new GoogleStrategy({
         callbackURL: '/auth/google/callback'
     },
     async(_token, _tokenSecret, profile, done) => {
-        const searchQuery = { googleID: profile.id }
-        const currentUser = await User.findOne(searchQuery);
+        const { id, name, photos } = profile;
+        const currentUser = await User.findOne({ googleID: id });
         
         if(currentUser){
           done(null, currentUser);
         }
         else{
-          const newUser = await User.create(searchQuery);
+          const newUser = await User.create({
+            userName: name.givenName,
+            photoURL: photos[0].value,
+            googleID: id
+          });
           await newUser.save();
 
           done(null, newUser)

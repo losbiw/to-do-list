@@ -17,8 +17,8 @@ router.post('/update', async(req, res) => {
     res.send(updated);
 });
 
-router.get('/logout', (req, res) => {
-    req.logout();
+router.get('/logout', async(req, res) => {
+    req.session = null;
     res.redirect('/');
 });
 
