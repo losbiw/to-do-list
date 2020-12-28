@@ -76,6 +76,14 @@ export default class App extends Component{
         }
     }
 
+    componentDidUpdate(_prevProps, prevState){
+        if(prevState.initialTasks !== this.state.initialTasks){
+            setTimeout(() => {
+                this.handleResize();
+            })           
+        }
+    }
+
     componentWillUnmount(){
         const { handleResize, handleDataUpdate } = this;
 

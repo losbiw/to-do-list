@@ -51,7 +51,6 @@ export default function Task(props){
                         rows='1'
                         ref={ input => input && handleResize(input) }
                         defaultValue={ task.value }
-                        size={ task.value.length }
                         onChange={ handleChange }/>
             </li>
         </Draggable>

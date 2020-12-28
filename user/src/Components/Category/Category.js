@@ -86,11 +86,6 @@ export default function Category(props){
                 ref={ item => {
                     if(item){
                         const index = parseElementProperty({ target: item }, 'index');
-                        const hidden = item.querySelector('div');
-                        const input = item.querySelector('input');
-
-                        const width = Math.round(hidden.scrollWidth);
-                        input.style.width = width + 'px';
                        
                         if(index === menuIndex){
                             const contextMenuEvent = document.createEvent('HTMLEvents');
@@ -107,7 +102,19 @@ export default function Category(props){
                     data-index={ index }
                     value={ category }
                     spellCheck='false'
-                    ref={ input => { if(input && activeIndex === index) input.focus() } }
+                    ref={ input => { 
+                        if(input && activeIndex === index){
+                            input.focus()
+                        }  
+
+                        if(input){
+                            const item = input.parentElement;
+                            const hidden = item.querySelector('div');
+
+                            const width = Math.round(hidden.scrollWidth);
+                            input.style.width = width + 'px';
+                        }
+                    } }
                     onChange={ handleNameChange } />
             </li> 
         </Draggable>

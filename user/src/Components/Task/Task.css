@@ -31,6 +31,7 @@
 }
 
 #tasks .task textarea{
+    width: 100%;
     border: none;
     font-size: 1.65vw;
     line-height: 2.5vw;
