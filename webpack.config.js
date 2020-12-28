@@ -1,5 +1,7 @@
+const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const NODE_ENV = process.env.NODE_ENV || 'development';
 
 module.exports = {
     entry: './user/src/index.js',
@@ -27,6 +29,11 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'user/public/index.html'
+        }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify(NODE_ENV)
+            }
         })
     ]
 }
