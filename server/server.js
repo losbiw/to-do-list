@@ -46,12 +46,12 @@ app.use('/auth', require('./routes/auth'));
 app.use('/data', require('./routes/data'));
 
 app.get('/', (_req, res) => {
-    // if(NODE_ENV === 'production'){
+    if(NODE_ENV === 'production'){
         res.sendFile(join(__dirname, 'build', 'index.html'));
-    // }
-    // else{
-    //     res.redirect('http://localhost:8080/');
-    // }
+    }
+    else{
+        res.redirect('http://localhost:8080/');
+    }
 })
 
 app.listen(PORT, () => {
