@@ -60,6 +60,7 @@
     }
 
     #tasks .task textarea{
+        width: auto;
         font-size: 2.25vh;
         line-height: 3.4vh;
     }
