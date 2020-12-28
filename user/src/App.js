@@ -12,6 +12,18 @@ import './Components/Scrollbar/Scrollbar.css'
 export default class App extends Component{
     constructor(props){
         super(props);
+        
+        this.fetchAddresses = {
+            getUserData: 'http://localhost:5000/data/',
+            postUserData: 'http://localhost:5000/data/update'
+        }
+
+        if(process.env.NODE_ENV === 'production'){
+            this.fetchAddresses = {
+                getUserData: '/data/',
+                postUserData: '/data/update'
+            }
+        }
 
         const { innerHeight, innerWidth } = window;
 
@@ -32,7 +44,7 @@ export default class App extends Component{
         window.addEventListener('beforeunload', handleDataUpdate);
         window.addEventListener('visibilitychange', handleDataUpdate);
 
-        const data = await fetch('http://localhost:5000/data/', {
+        const data = await fetch(this.fetchAddresses.getUserData, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -94,7 +106,7 @@ export default class App extends Component{
         if(tasks && !areEqual(tasks, initialTasks)){
             const keylessData = this.changeKeyProperties(tasks, true);
 
-            await fetch('http://localhost:5000/data/update', {
+            await fetch(this.fetchAddresses.postUserData, {
                 method: 'POST', 
                 mode: 'cors',
                 credentials: 'include',

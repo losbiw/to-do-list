@@ -6,7 +6,9 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
-if(process.env.NODE_ENV !== 'production'){
+const { NODE_ENV } = process.env;
+
+if(NODE_ENV !== 'production'){
     require('dotenv').config({ path: join(__dirname, './.env') })
 }
 require('./routes/passportSetup');
@@ -43,7 +45,12 @@ app.use('/auth', require('./routes/auth'));
 app.use('/data', require('./routes/data'));
 
 app.get('/', (_req, res) => {
-    res.redirect('http://localhost:8080/');
+    if(NODE_ENV === 'production'){
+        res.sendFile(join(__dirname, 'build', 'index.html'));
+    }
+    else{
+        res.redirect('http://localhost:8080/');
+    }
 })
 
 app.listen(PORT, () => {
