@@ -12,8 +12,11 @@ export default function Profile(props){
             </h1>
             <div id='logout'>
                 <img src={ photoURL }/>
-                <a href='http://localhost:5000/data/logout'>
-                    Log Out
+                <a href={ process.env.NODE_ENV === 'production' ? 
+                          '/data/logout' : 
+                          'http://localhost:5000/data/logout' }
+                >
+                    Log Out 
                 </a>
             </div>
         </div>

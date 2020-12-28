@@ -6,7 +6,9 @@ export default function SignIn(_props){
     const options = {
         google: {
             img: 'https://img-authors.flaticon.com/google.jpg',
-            url: 'http://localhost:5000/auth/google'
+            url: process.env.NODE_ENV === 'production' ? 
+                 '/auth/google' : 
+                 'http://localhost:5000/auth/google'
         }
     }
     
