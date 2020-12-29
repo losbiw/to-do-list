@@ -27,7 +27,8 @@ app.use(express.urlencoded({extended: false}));
 app.use(
     cookieSession({
       name: "session",
-      keys: [process.env.COOKIE_KEY]
+      keys: [process.env.COOKIE_KEY],
+      maxAge: 9000000000000
     })
 );
 app.use(cookieParser());
