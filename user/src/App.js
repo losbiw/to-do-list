@@ -38,7 +38,7 @@ export default class App extends Component{
     }
 
     async componentDidMount(){
-        const { handleResize, handleDataUpdate, changeKeyProperties } = this;
+        const { handleResize, handleDataUpdate, changeKeyProperties, createObjectCopy } = this;
 
         window.addEventListener('resize', handleResize);
         window.addEventListener('beforeunload', handleDataUpdate);
@@ -65,7 +65,7 @@ export default class App extends Component{
                 photoURL,
                 currentGroupIndex: 0,
                 tasks: updated,
-                initialTasks: JSON.parse(JSON.stringify(updated))
+                initialTasks: createObjectCopy(updated)
             })
         }
         catch{
@@ -108,11 +108,30 @@ export default class App extends Component{
         return obj
     }
 
+    removeEmptyItems = obj => {
+        for(const category of obj){
+            category.list.map((task, index) => {
+                if(task.value.length === 0){
+                    category.list.splice(index, 1);
+                }
+            })
+        }
+        
+        return obj
+    }
+
     handleDataUpdate = async() => {
+        const { createObjectCopy, removeEmptyItems, changeKeyProperties } = this;
         const { tasks, initialTasks } = this.state;
 
         if(tasks && !areEqual(tasks, initialTasks)){
-            const keylessData = this.changeKeyProperties(tasks, true);
+            const copy = createObjectCopy(tasks);
+
+            const removedEmpty = removeEmptyItems(copy);
+            const keylessData = changeKeyProperties(
+                createObjectCopy(removedEmpty), 
+                true
+            );
 
             await fetch(this.fetchAddresses.postUserData, {
                 method: 'POST', 
@@ -122,8 +141,16 @@ export default class App extends Component{
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(keylessData)
+            });
+
+            this.setState({
+                tasks: removedEmpty
             })
         }
+    }
+
+    createObjectCopy = obj => {
+        return JSON.parse(JSON.stringify(obj));
     }
 
     handleResize = () => {

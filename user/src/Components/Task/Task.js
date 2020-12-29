@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { Draggable } from 'react-smooth-dnd'
 import { ReactComponent as Complete } from 'assets/Task/complete.svg'
 import './Task.css'
@@ -49,7 +50,17 @@ export default function Task(props){
                 <textarea data-index={ index } 
                         spellCheck='false'
                         rows='1'
-                        ref={ input => input && handleResize(input) }
+                        ref={ input => {
+                            if(input){
+                                handleResize(input);
+                                
+                                if(document.activeElement !== ReactDOM.findDOMNode(input) &&
+                                    input.value.length === 0)
+                                {
+                                    handleDelete({ target: input });
+                                }
+                            } 
+                        }}
                         defaultValue={ task.value }
                         onChange={ handleChange }/>
             </li>
