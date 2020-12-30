@@ -6,7 +6,7 @@ import { ReactComponent as Delete } from 'assets/Context/delete.svg'
 import './Category.css'
 
 export default function Category(props){
-    const { index, tasks, category, current, activeIndex,  menuIndex } = props.data;
+    const { index, tasks, category, current, activeIndex, menuIndex, size } = props.data;
     const { handleAppStateChange, handleStateChange, handleCategoryDelete } = props.handlers;
 
     const parseElementProperty = (e, property) => {
@@ -36,16 +36,16 @@ export default function Category(props){
     const handleRightClick = e => {
         if(e.cancelable) e.preventDefault();
 
+        const { innerWidth } = size;
+        const { left, top, height, width, right } = e.nativeEvent.target.getBoundingClientRect();
         const { clientX, clientY } = e.nativeEvent;
-        const { offsetTop, offsetLeft, offsetParent, clientHeight, clientWidth } = e.nativeEvent.target;
-        const { offsetTop: parentOffsetTop, offsetLeft: parentOffsetLeft } = offsetParent;
 
         const parsed = parseElementProperty(e, 'index');
 
         const Menu = {
             coords: {
-                height: clientY || offsetTop + parentOffsetTop + clientHeight / 1.8,
-                width: clientX || offsetLeft + parentOffsetLeft + clientWidth / 1.75
+                top: clientY || top + height / 1.8,
+                left: clientX || (innerWidth - right < width ? left : left + width / 1.75)
             },
             actions: [
                 {

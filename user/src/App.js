@@ -77,7 +77,7 @@ export default class App extends Component{
     }
 
     componentDidUpdate(_prevProps, prevState){
-        if(prevState.initialTasks !== this.state.initialTasks){
+        if(!areEqual(prevState.initialTasks, this.state.initialTasks)){
             setTimeout(() => {
                 this.handleResize();
             })           

@@ -103,7 +103,7 @@ export default class Categories extends Component{
 
     render(){
         const { handleDrop, handleDragEnd, handleDragLeave, listRef, handleStateChange } = this;
-        const { tasks, current, handleAppStateChange, handleCategoryDelete } = this.props;
+        const { tasks, size, current, handleAppStateChange, handleCategoryDelete } = this.props;
         const { contextMenu, activeIndex, menuIndex } = this.state;
 
         return(
@@ -129,6 +129,7 @@ export default class Categories extends Component{
                                     index,
                                     category,
                                     current,
+                                    size,
                                     tasks,
                                     activeIndex,
                                     menuIndex,

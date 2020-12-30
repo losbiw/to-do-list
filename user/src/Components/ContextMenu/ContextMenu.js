@@ -3,10 +3,9 @@ import './ContextMenu.css'
 
 export default function ContextMenu(props){
     const { coords, actions } = props.data;
-    const { height, width } = coords;
 
     return(
-        <div id='context' style={{ top: height, left: width }}>
+        <div id='context' style={ coords }>
             {
                 actions.map(item => {
                     const { title, action, Icon, disabled } = item;
