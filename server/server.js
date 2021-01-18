@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGO_DB_CONNECT, { useFindAndModify: false }, () =
     console.log('MongoDB is connected');
 });
 
-app.use(express.static(join(__dirname, '/build')));
+if(NODE_ENV === 'production') app.use(express.static(join(__dirname, '/build')));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
